@@ -1,9 +1,14 @@
-﻿using System;
+using System;
 using System.Windows.Forms;
 using System.Data;
 using System.Data.SqlClient;
 using Excel = Microsoft.Office.Interop.Excel;
 using MySql.Data;
+using Renci.SshNet;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Configuration;
 
 namespace ConsoleApp4
 {
@@ -27,11 +32,12 @@ namespace ConsoleApp4
             xlWorkBook = xlApp.Workbooks.Add(misValue);
             xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
 
-            connectionString = "server=localhost;uid=root;pwd=password;database=sakila";
+
+            connectionString = "server=elvis.rowan.edu;uid=jiangs1;pwd=agingmonster;database=jiangs1";
 
             cnn = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
             cnn.Open();
-            sql = "SELECT * FROM sakila.film ";
+            sql = "SELECT * FROM jiangs1.Course ";
             MySql.Data.MySqlClient.MySqlDataAdapter dscmd = new MySql.Data.MySqlClient.MySqlDataAdapter(sql, cnn);
             DataSet ds = new DataSet();
             dscmd.Fill(ds);
@@ -45,14 +51,14 @@ namespace ConsoleApp4
                 }
             }
 
-            xlWorkBook.SaveAs("c:\\temp\\sakilaFilms", Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+            xlWorkBook.SaveAs("h:\\testdb", Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
             xlWorkBook.Close(true, misValue, misValue);
             xlApp.Quit();
 
             releaseObject(xlWorkSheet);
             releaseObject(xlWorkBook);
             releaseObject(xlApp);
-            
+
         }
 
         private static void releaseObject(object obj)
@@ -72,6 +78,7 @@ namespace ConsoleApp4
                 GC.Collect();
             }
         }
-    }
-    }
 
+
+    }
+}
