@@ -1,0 +1,46 @@
+C:\Users\sanch\Desktop\Visual Studio\Course Scheduler\Course Scheduler\bin\Debug\Course Scheduler.dll
+C:\Users\sanch\Desktop\Visual Studio\Course Scheduler\Course Scheduler\bin\Debug\Course Scheduler.pdb
+C:\Users\sanch\Desktop\Visual Studio\Course Scheduler\Course Scheduler\bin\Debug\Course Scheduler.dll.manifest
+C:\Users\sanch\Desktop\Visual Studio\Course Scheduler\Course Scheduler\bin\Debug\Course Scheduler.vsto
+C:\Users\sanch\Desktop\Visual Studio\Course Scheduler\Course Scheduler\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
+C:\Users\sanch\Desktop\Visual Studio\Course Scheduler\Course Scheduler\obj\Debug\Course Scheduler.csprojAssemblyReference.cache
+C:\Users\sanch\Desktop\Visual Studio\Course Scheduler\Course Scheduler\obj\Debug\Course_Scheduler.Properties.Resources.resources
+C:\Users\sanch\Desktop\Visual Studio\Course Scheduler\Course Scheduler\obj\Debug\Course_Scheduler.Ribbon1.resources
+C:\Users\sanch\Desktop\Visual Studio\Course Scheduler\Course Scheduler\obj\Debug\Course Scheduler.csproj.GenerateResource.cache
+C:\Users\sanch\Desktop\Visual Studio\Course Scheduler\Course Scheduler\obj\Debug\Course Scheduler.csproj.CoreCompileInputs.cache
+C:\Users\sanch\Desktop\Visual Studio\Course Scheduler\Course Scheduler\obj\Debug\Course Scheduler.csproj.CopyComplete
+C:\Users\sanch\Desktop\Visual Studio\Course Scheduler\Course Scheduler\obj\Debug\Course Scheduler.dll
+C:\Users\sanch\Desktop\Visual Studio\Course Scheduler\Course Scheduler\obj\Debug\Course Scheduler.pdb
+C:\Users\sanch\Desktop\Visual Studio\Course Scheduler\Course Scheduler\obj\Debug\Course Scheduler.csproj.ResolveComReference.cache
+C:\Users\sanch\Desktop\Visual Studio\Course Scheduler\Course Scheduler\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\sanch\Desktop\Visual Studio\Course Scheduler\Course Scheduler\bin\Debug\Google.Protobuf.dll
+C:\Users\sanch\Desktop\Visual Studio\Course Scheduler\Course Scheduler\bin\Debug\MySql.Data.dll
+C:\Users\sanch\Desktop\Visual Studio\Course Scheduler\Course Scheduler\bin\Debug\Renci.SshNet.dll
+C:\Users\sanch\Desktop\Visual Studio\Course Scheduler\Course Scheduler\bin\Debug\Ubiety.Dns.Core.dll
+C:\Users\sanch\Desktop\Visual Studio\Course Scheduler\Course Scheduler\bin\Debug\Google.Protobuf.xml
+C:\Users\sanch\Desktop\Visual Studio\Course Scheduler\Course Scheduler\bin\Debug\MySql.Data.xml
+C:\Users\sanch\Desktop\Visual Studio\Course Scheduler\Course Scheduler\bin\Debug\Renci.SshNet.xml
+C:\Users\sanch\Desktop\Visual Studio\Course Scheduler\Course Scheduler\bin\Debug\Ubiety.Dns.Core.xml
+C:\Users\Sanchez\Desktop\Course Scheduler\Course Scheduler\Course Scheduler\bin\Debug\Course Scheduler.dll
+C:\Users\Sanchez\Desktop\Course Scheduler\Course Scheduler\Course Scheduler\bin\Debug\Course Scheduler.pdb
+C:\Users\Sanchez\Desktop\Course Scheduler\Course Scheduler\Course Scheduler\bin\Debug\Course Scheduler.dll.manifest
+C:\Users\Sanchez\Desktop\Course Scheduler\Course Scheduler\Course Scheduler\bin\Debug\Course Scheduler.vsto
+C:\Users\Sanchez\Desktop\Course Scheduler\Course Scheduler\Course Scheduler\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\Sanchez\Desktop\Course Scheduler\Course Scheduler\Course Scheduler\bin\Debug\Google.Protobuf.dll
+C:\Users\Sanchez\Desktop\Course Scheduler\Course Scheduler\Course Scheduler\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
+C:\Users\Sanchez\Desktop\Course Scheduler\Course Scheduler\Course Scheduler\bin\Debug\MySql.Data.dll
+C:\Users\Sanchez\Desktop\Course Scheduler\Course Scheduler\Course Scheduler\bin\Debug\Renci.SshNet.dll
+C:\Users\Sanchez\Desktop\Course Scheduler\Course Scheduler\Course Scheduler\bin\Debug\Ubiety.Dns.Core.dll
+C:\Users\Sanchez\Desktop\Course Scheduler\Course Scheduler\Course Scheduler\bin\Debug\Google.Protobuf.xml
+C:\Users\Sanchez\Desktop\Course Scheduler\Course Scheduler\Course Scheduler\bin\Debug\MySql.Data.xml
+C:\Users\Sanchez\Desktop\Course Scheduler\Course Scheduler\Course Scheduler\bin\Debug\Renci.SshNet.xml
+C:\Users\Sanchez\Desktop\Course Scheduler\Course Scheduler\Course Scheduler\bin\Debug\Ubiety.Dns.Core.xml
+C:\Users\Sanchez\Desktop\Course Scheduler\Course Scheduler\Course Scheduler\obj\Debug\Course Scheduler.csprojAssemblyReference.cache
+C:\Users\Sanchez\Desktop\Course Scheduler\Course Scheduler\Course Scheduler\obj\Debug\Course Scheduler.csproj.ResolveComReference.cache
+C:\Users\Sanchez\Desktop\Course Scheduler\Course Scheduler\Course Scheduler\obj\Debug\Course_Scheduler.Properties.Resources.resources
+C:\Users\Sanchez\Desktop\Course Scheduler\Course Scheduler\Course Scheduler\obj\Debug\Course_Scheduler.Ribbon1.resources
+C:\Users\Sanchez\Desktop\Course Scheduler\Course Scheduler\Course Scheduler\obj\Debug\Course Scheduler.csproj.GenerateResource.cache
+C:\Users\Sanchez\Desktop\Course Scheduler\Course Scheduler\Course Scheduler\obj\Debug\Course Scheduler.csproj.CoreCompileInputs.cache
+C:\Users\Sanchez\Desktop\Course Scheduler\Course Scheduler\Course Scheduler\obj\Debug\Course Scheduler.csproj.CopyComplete
+C:\Users\Sanchez\Desktop\Course Scheduler\Course Scheduler\Course Scheduler\obj\Debug\Course Scheduler.dll
+C:\Users\Sanchez\Desktop\Course Scheduler\Course Scheduler\Course Scheduler\obj\Debug\Course Scheduler.pdb
