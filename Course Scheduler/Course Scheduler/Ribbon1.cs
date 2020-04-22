@@ -21,7 +21,7 @@ namespace Course_Scheduler
 
         private void final_report_button_Click(object sender, RibbonControlEventArgs e)
         {
-
+            r.generateReport();
         }
     }
 }

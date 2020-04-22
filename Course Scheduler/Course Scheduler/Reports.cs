@@ -28,9 +28,9 @@ namespace Course_Scheduler
 
         public Reports()
         {
-            //connectionString = "server=elvis.rowan.edu;uid=jiangs1;pwd=agingmonster;database=jiangs1";
-            //cnn = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
-            //cnn.Open();
+            connectionString = "server=localhost;uid=root;pwd=password;database=sweng";
+            cnn = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
+            cnn.Open();
         }
 
         public Reports(int room, int final_rep)
@@ -71,9 +71,9 @@ namespace Course_Scheduler
                    System.Reflection.Missing.Value, System.Reflection.Missing.Value,
                    _Excel.XlSearchOrder.xlByColumns, _Excel.XlSearchDirection.xlPrevious,
                    false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Column;
-            connectionString = "server=elvis.rowan.edu;uid=jiangs1;pwd=agingmonster;database=jiangs1";
+            connectionString = "server=root;uid=root;pwd=password;database=sweng";
             cnn = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
-            //cnn.Open();
+            cnn.Open();
         }
 
         public void generateReport()
@@ -84,7 +84,6 @@ namespace Course_Scheduler
                 reportFromDB();
                 condenseReport();
                 centerAlign();
-                wb.Save();
             }
             catch (System.Runtime.InteropServices.COMException e)
             {
@@ -95,7 +94,6 @@ namespace Course_Scheduler
 
         public void reportFromDB()
         {
-            cnn.Open();
             sql = "call FinalReport();";
             MySql.Data.MySqlClient.MySqlDataAdapter dscmd = new MySql.Data.MySqlClient.MySqlDataAdapter(sql, cnn);
             DataSet ds = new DataSet();
@@ -140,9 +138,8 @@ namespace Course_Scheduler
 
         public void clearSheet(Worksheet sheet)
         {
-            var rng = final_report.get_Range("A2:E300", Type.Missing);
+            var rng = Globals.ThisAddIn.Application.ActiveSheet.Cells.Range("A2:R100", Type.Missing);
             rng.Cells.Clear();
-            wb.Save();
             Console.WriteLine("Sheet Cleared");
         }
 
