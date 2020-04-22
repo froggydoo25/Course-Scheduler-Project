@@ -12,10 +12,16 @@ namespace Sweng
         static void Main(string[] args)
         {
             //FinalReport fr = new FinalReport(@"H:\Desktop\Final Report\Sweng\Fall2020_plan_intermediate.xlsx", 5, 6);
-            FinalReport fr = new FinalReport(@"C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Final Report\Sweng\Fall2020_plan_intermediate.xlsx", 5, 6);
+            FinalReport fr = new FinalReport(@"C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Final Report(Not the add-in)\Sweng\Copy_of_Fall2020_plan_intermediate_w_Final_Report.xlsx", 5, 6);
             fr.generateReport();
             fr.Close();
             fr.excel.Quit();
+            System.Runtime.InteropServices.Marshal.FinalReleaseComObject(fr.rooms);
+            System.Runtime.InteropServices.Marshal.FinalReleaseComObject(fr.final_report);
+            System.Runtime.InteropServices.Marshal.FinalReleaseComObject(fr.wb);
+            System.Runtime.InteropServices.Marshal.FinalReleaseComObject(fr.excel);
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
             Console.Read();
         }
     }

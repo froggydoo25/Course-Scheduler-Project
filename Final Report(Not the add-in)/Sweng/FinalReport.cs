@@ -42,9 +42,9 @@ namespace Sweng
                                _Excel.XlSearchOrder.xlByRows, _Excel.XlSearchDirection.xlPrevious,
                                false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
             lastCol = 18;
-            connectionString = "server=elvis.rowan.edu;uid=jiangs1;pwd=agingmonster;database=jiangs1";
+            connectionString = "server=localhost;uid=root;pwd=password;database=sweng";
             cnn = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
-            //cnn.Open();
+            cnn.Open();
         }
 
         public void generateReport()
@@ -53,7 +53,7 @@ namespace Sweng
             {
                 clearSheet(final_report);
                 reportFromDB();
-                simplifyReport();
+                //simplifyReport();
                 centerAlign();
                 wb.Save();
             }
@@ -78,6 +78,7 @@ namespace Sweng
                     final_report.Cells[i + 2, j + 1] = data;
                 }
             }
+            Console.WriteLine("Done with report!");
         }
 
         public void simplifyReport()
@@ -105,6 +106,8 @@ namespace Sweng
             rng.Cells.VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignCenter;
             rng.Cells.Columns.AutoFit();
             rng.Cells.Rows.AutoFit();
+            Console.WriteLine("Done aligning!");
+
         }
 
         public void clearSheet(Worksheet sheet)
@@ -225,12 +228,6 @@ namespace Sweng
         public void Close()
         {
             wb.Close(0);
-            System.Runtime.InteropServices.Marshal.FinalReleaseComObject(rooms);
-            System.Runtime.InteropServices.Marshal.FinalReleaseComObject(final_report);
-            System.Runtime.InteropServices.Marshal.FinalReleaseComObject(wb);
-            System.Runtime.InteropServices.Marshal.FinalReleaseComObject(excel);
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
         }
     }
 }
