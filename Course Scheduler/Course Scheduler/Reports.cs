@@ -12,14 +12,10 @@ namespace Course_Scheduler
 {
     class Reports
     {
-        string path = "";
-        //public _Application excel = new _Excel.Application();
-        public Workbook wb;
-        public Worksheet rooms, final_report, db;
         List<KeyValuePair<int, int>> room = new List<KeyValuePair<int, int>>();
         string[] line;
-        int row = 2, col = 1;
-        int lastRow, lastCol;
+        int lastUsedRow, lastUsedCol;
+        _Excel.Worksheet final_report;
 
         string connectionString = null;
         string sql = null;
@@ -28,61 +24,26 @@ namespace Course_Scheduler
 
         public Reports()
         {
-            connectionString = "server=localhost;uid=root;pwd=password;database=sweng";
+            connectionString = "server=localhost;uid=root;pwd=password;database=course_scheduler";
             cnn = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
             cnn.Open();
         }
 
-        public Reports(int room, int final_rep)
+        public void getSheetInfo()
         {
-            //Get the assembly information
-            System.Reflection.Assembly assemblyInfo = System.Reflection.Assembly.GetExecutingAssembly();
-
-            //Location is where the assembly is run from 
-            string assemblyLocation = assemblyInfo.Location;
-            this.path = assemblyLocation;
-            wb = Globals.ThisAddIn.Application.ActiveWorkbook;
-            rooms = wb.Worksheets[room];
-            final_report = wb.Worksheets[final_rep];
-            lastRow = final_report.Cells.Find("*", System.Reflection.Missing.Value,
-                               System.Reflection.Missing.Value, System.Reflection.Missing.Value,
-                               _Excel.XlSearchOrder.xlByRows, _Excel.XlSearchDirection.xlPrevious,
-                               false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
-            lastCol = final_report.Cells.Find("*", System.Reflection.Missing.Value,
-                               System.Reflection.Missing.Value, System.Reflection.Missing.Value,
-                               _Excel.XlSearchOrder.xlByColumns, _Excel.XlSearchDirection.xlPrevious,
-                               false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Column;
-            connectionString = "server=elvis.rowan.edu;uid=jiangs1;pwd=agingmonster;database=jiangs1";
-            cnn = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
-            //cnn.Open();
-        }
-
-        public Reports(string path, int room, int final_rep)
-        {
-            this.path = path;
-            wb = Globals.ThisAddIn.Application.ActiveWorkbook;
-            rooms = wb.Worksheets[room];
-            final_report = wb.Worksheets[final_rep];
-            lastRow = final_report.Cells.Find("*", System.Reflection.Missing.Value,
-                               System.Reflection.Missing.Value, System.Reflection.Missing.Value,
-                               _Excel.XlSearchOrder.xlByRows, _Excel.XlSearchDirection.xlPrevious,
-                               false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
-            lastCol = final_report.Cells.Find("*", System.Reflection.Missing.Value,
-                   System.Reflection.Missing.Value, System.Reflection.Missing.Value,
-                   _Excel.XlSearchOrder.xlByColumns, _Excel.XlSearchDirection.xlPrevious,
-                   false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Column;
-            connectionString = "server=root;uid=root;pwd=password;database=sweng";
-            cnn = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
-            cnn.Open();
+            final_report = Globals.ThisAddIn.Application.ActiveSheet;
+            _Excel.Range last = final_report.Cells.SpecialCells(_Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
+            lastUsedRow = last.Row;
+            lastUsedCol = last.Column;
         }
 
         public void generateReport()
         {
             try
             {
-                clearSheet(final_report);
+                clearSheet();
                 reportFromDB();
-                condenseReport();
+                //addLeadingZero();
                 centerAlign();
             }
             catch (System.Runtime.InteropServices.COMException e)
@@ -92,55 +53,68 @@ namespace Course_Scheduler
 
         }
 
-        public void reportFromDB()
+        public void addLeadingZero()
         {
-            sql = "call FinalReport();";
-            MySql.Data.MySqlClient.MySqlDataAdapter dscmd = new MySql.Data.MySqlClient.MySqlDataAdapter(sql, cnn);
-            DataSet ds = new DataSet();
-            dscmd.Fill(ds);
-            for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+            getSheetInfo();
+            for (int row = 2; row < lastUsedRow; row++)
             {
-                for (int j = 0; j <= ds.Tables[0].Columns.Count - 1; j++)
-                {
-                    data = ds.Tables[0].Rows[i].ItemArray[j].ToString();
-                    Globals.ThisAddIn.Application.ActiveSheet.Cells[i + 2, j + 1] = data;
-                }
+                string courseNum = "" + final_report.Cells[row, 2].Value();
+                if (courseNum.Length < 5)
+                    final_report.Cells[row, 2] = "0" + courseNum;
             }
-        }
-
-        public void condenseReport()
-        {
-            //Section #(C), Course Title(D), Prof First Name(F), Prof Last Name(G), Slot Time(i), Room(j)
-            string previous = "";
-            string current = "";
-            for (int row = 2; row < lastRow + 1; row++)
-            {
-                current = "";
-                current += ReadCell(row, 3, final_report) + "," + ReadCell(row, 4, final_report) + "," + ReadCell(row, 6, final_report) + "," + ReadCell(row, 7, final_report) + "," + ReadCell(row, 9, final_report) + "," + ReadCell(row, 10, final_report);
-                if (previous.Equals(current))
-                {
-                    final_report.Cells[row - 1, 8] = ReadCell(row - 1, 8, final_report) + ReadCell(row, 8, final_report);
-                    //final_report.Cells[row - 1, 8] = "HellO";
-                    final_report.Rows.Delete(row);
-                }
-                previous = current;
-            }
+            
         }
 
         public void centerAlign()
         {
-            var rng = Globals.ThisAddIn.Application.ActiveSheet;
-            rng.Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
-            rng.Cells.VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignCenter;
-            rng.Cells.Columns.AutoFit();
-            rng.Cells.Rows.AutoFit();
+            final_report.Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+            final_report.Cells.VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignCenter;
+            final_report.Cells.Columns.AutoFit();
+            final_report.Cells.Rows.AutoFit();
         }
 
-        public void clearSheet(Worksheet sheet)
+        public void clearSheet()
         {
             var rng = Globals.ThisAddIn.Application.ActiveSheet.Cells.Range("A2:R100", Type.Missing);
             rng.Cells.Clear();
             Console.WriteLine("Sheet Cleared");
+        }
+
+        public void createBorder()
+        {
+            string previous = "";
+            string current = "";
+            getSheetInfo();
+            for (int row = 2; row < lastUsedRow; row++)
+            {
+                current = "";
+                current += final_report.Cells[row, 3].Value() + "," + final_report.Cells[row, 4].Value();
+                if (row != 2)
+                {
+                    if (!(previous.Equals(current)))
+                    {
+                        var rng = "A" + row + ":R18";
+                        var border_range = final_report.Cells.Range[rng];
+                        border_range.BorderAround(_Excel.XlLineStyle.xlContinuous, _Excel.XlBorderWeight.xlThick);
+                    }
+                }
+
+                previous = current;
+            }
+        }
+
+        static string GetColumnName(int index)
+        {
+            const string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+            var value = "";
+
+            if (index >= letters.Length)
+                value += letters[index / letters.Length - 1];
+
+            value += letters[index % letters.Length];
+
+            return value;
         }
 
         private string ReadCell(KeyValuePair<int, int> course, Worksheet sheet)
@@ -159,15 +133,21 @@ namespace Course_Scheduler
             return "";
         }
 
-        public void Close()
+        public void reportFromDB()
         {
-            wb.Close(0);
-            System.Runtime.InteropServices.Marshal.FinalReleaseComObject(rooms);
-            System.Runtime.InteropServices.Marshal.FinalReleaseComObject(final_report);
-            System.Runtime.InteropServices.Marshal.FinalReleaseComObject(wb);
-            //System.Runtime.InteropServices.Marshal.FinalReleaseComObject(excel);
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
+            sql = "call FinalReport();";
+            MySql.Data.MySqlClient.MySqlDataAdapter dscmd = new MySql.Data.MySqlClient.MySqlDataAdapter(sql, cnn);
+            DataSet ds = new DataSet();
+            dscmd.Fill(ds);
+            getSheetInfo();
+            for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+            {
+                for (int j = 0; j <= ds.Tables[0].Columns.Count - 1; j++)
+                {
+                    data = ds.Tables[0].Rows[i].ItemArray[j].ToString();
+                    final_report.Cells[i + 2, j + 1] = data;
+                }
+            }
         }
     }
 }

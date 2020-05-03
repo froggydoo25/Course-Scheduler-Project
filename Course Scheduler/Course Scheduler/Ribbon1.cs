@@ -23,5 +23,15 @@ namespace Course_Scheduler
         {
             r.generateReport();
         }
+
+        private void border_button_Click(object sender, RibbonControlEventArgs e)
+        {
+            r.createBorder();
+        }
+
+        private void button1_Click(object sender, RibbonControlEventArgs e)
+        {
+            r.addLeadingZero();
+        }
     }
 }

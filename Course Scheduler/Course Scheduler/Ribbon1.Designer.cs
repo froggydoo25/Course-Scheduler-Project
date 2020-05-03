@@ -39,6 +39,7 @@
             this.final_report_button = this.Factory.CreateRibbonButton();
             this.format_group = this.Factory.CreateRibbonGroup();
             this.center_align_button = this.Factory.CreateRibbonButton();
+            this.border_button = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.report_group.SuspendLayout();
             this.format_group.SuspendLayout();
@@ -66,6 +67,7 @@
             // format_group
             // 
             this.format_group.Items.Add(this.center_align_button);
+            this.format_group.Items.Add(this.border_button);
             this.format_group.Label = "Format";
             this.format_group.Name = "format_group";
             // 
@@ -74,6 +76,12 @@
             this.center_align_button.Label = "Center Align Content";
             this.center_align_button.Name = "center_align_button";
             this.center_align_button.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.center_align_button_Click);
+            // 
+            // border_button
+            // 
+            this.border_button.Label = "Create Borders";
+            this.border_button.Name = "border_button";
+            this.border_button.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.border_button_Click);
             // 
             // Ribbon1
             // 
@@ -98,6 +106,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton final_report_button;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup format_group;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton center_align_button;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton border_button;
     }
 
     partial class ThisRibbonCollection
