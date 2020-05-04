@@ -24,33 +24,9 @@ namespace Course_Scheduler
 
         public Reports()
         {
-            connectionString = "server=localhost;uid=root;pwd=password;database=course_scheduler";
+            connectionString = "server=localhost;uid=root;pwd=password;database=sweng";
             cnn = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
             cnn.Open();
-        }
-
-        public void getSheetInfo()
-        {
-            final_report = Globals.ThisAddIn.Application.ActiveSheet;
-            _Excel.Range last = final_report.Cells.SpecialCells(_Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
-            lastUsedRow = last.Row;
-            lastUsedCol = last.Column;
-        }
-
-        public void generateReport()
-        {
-            try
-            {
-                clearSheet();
-                reportFromDB();
-                //addLeadingZero();
-                centerAlign();
-            }
-            catch (System.Runtime.InteropServices.COMException e)
-            {
-                Console.WriteLine(e);
-            }
-
         }
 
         public void addLeadingZero()
@@ -80,6 +56,7 @@ namespace Course_Scheduler
             Console.WriteLine("Sheet Cleared");
         }
 
+        //Working on this in the reportFromDB() method, feel free to use this instead if its easier
         public void createBorder()
         {
             string previous = "";
@@ -88,19 +65,55 @@ namespace Course_Scheduler
             for (int row = 2; row < lastUsedRow; row++)
             {
                 current = "";
-                current += final_report.Cells[row, 3].Value() + "," + final_report.Cells[row, 4].Value();
+                current += final_report.Cells[row, 2].Value() + "," +  final_report.Cells[row, 3].Value() + "," + final_report.Cells[row, 4].Value();
                 if (row != 2)
                 {
                     if (!(previous.Equals(current)))
                     {
                         var rng = "A" + row + ":R18";
-                        var border_range = final_report.Cells.Range[rng];
-                        border_range.BorderAround(_Excel.XlLineStyle.xlContinuous, _Excel.XlBorderWeight.xlThick);
+                        final_report.Cells.Range[rng].Borders[_Excel.XlBordersIndex.xlEdgeTop].Weight = 3d;
                     }
                 }
 
                 previous = current;
             }
+        }
+
+        //Creates a comma separated string of single attributes in DB
+        public String stringifySet(MySql.Data.MySqlClient.MySqlDataAdapter sql)
+        {
+            string result = "";
+            DataSet ds = new DataSet();
+            sql.Fill(ds);
+            for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+                for (int j = 0; j <= ds.Tables[0].Columns.Count - 1; j++)
+                    result += ds.Tables[0].Rows[i].ItemArray[j].ToString() + ",";
+            return result;
+        }
+
+        public void generateReport()
+        {
+            try
+            {
+                clearSheet();
+                reportFromDB();
+                //addLeadingZero();
+                centerAlign();
+                //createBorder();
+            }
+            catch (System.Runtime.InteropServices.COMException e)
+            {
+                Console.WriteLine(e);
+            }
+
+        }
+
+        public void getSheetInfo()
+        {
+            final_report = Globals.ThisAddIn.Application.ActiveSheet;
+            _Excel.Range last = final_report.Cells.SpecialCells(_Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
+            lastUsedRow = last.Row;
+            lastUsedCol = last.Column;
         }
 
         static string GetColumnName(int index)
@@ -137,16 +150,76 @@ namespace Course_Scheduler
         {
             sql = "call FinalReport();";
             MySql.Data.MySqlClient.MySqlDataAdapter dscmd = new MySql.Data.MySqlClient.MySqlDataAdapter(sql, cnn);
+            MySql.Data.MySqlClient.MySqlDataAdapter Ids = new MySql.Data.MySqlClient.MySqlDataAdapter("select banner_id from instructor order by banner_id;", cnn);
+            MySql.Data.MySqlClient.MySqlDataAdapter Fname = new MySql.Data.MySqlClient.MySqlDataAdapter("select first_name from instructor order by first_name;", cnn);
+            MySql.Data.MySqlClient.MySqlDataAdapter Lname = new MySql.Data.MySqlClient.MySqlDataAdapter("select last_name from instructor order by last_name;", cnn);
+            string IdList = stringifySet(Ids);
+            string firstNameList = stringifySet(Fname);
+            string lastNamesList = stringifySet(Lname);
             DataSet ds = new DataSet();
             dscmd.Fill(ds);
             getSheetInfo();
-            for (int i = 0; i <= ds.Tables[0].Rows.Count - 1; i++)
+            string previous = "", current = "";
+            for (int row = 0; row <= ds.Tables[0].Rows.Count - 1; row++)
             {
-                for (int j = 0; j <= ds.Tables[0].Columns.Count - 1; j++)
+                current = "";
+                for (int col = 0; col <= ds.Tables[0].Columns.Count - 1; col++)
                 {
-                    data = ds.Tables[0].Rows[i].ItemArray[j].ToString();
-                    final_report.Cells[i + 2, j + 1] = data;
+                    if(col == 4)     //Professor Bannar ID Col
+                    {
+                        var cell = (Range)final_report.Cells[row + 2, col + 1];
+                        cell.Validation.Delete();
+                        cell.Validation.Add(XlDVType.xlValidateList,
+                                            XlDVAlertStyle.xlValidAlertInformation,
+                                            XlFormatConditionOperator.xlBetween,
+                                            IdList,
+                                            Type.Missing);
+                        cell.Validation.IgnoreBlank = true;
+                        cell.Validation.InCellDropdown = true;
+                        cell.Value = "";
+                    }
+                    if(col == 5)      //Professor First Names Col
+                    {
+                        var cell = (Range)final_report.Cells[row + 2, col + 1];
+                        cell.Validation.Delete();
+                        cell.Validation.Add(XlDVType.xlValidateList, 
+                                            XlDVAlertStyle.xlValidAlertInformation,
+                                            XlFormatConditionOperator.xlBetween,
+                                            firstNameList,
+                                            Type.Missing);                                            
+                        cell.Validation.IgnoreBlank = true;
+                        cell.Validation.InCellDropdown = true;
+                        cell.Value = "";
+                    }
+                    else if(col == 6)     //Professor Last Names Col
+                    {
+                        var cell = (Range)final_report.Cells[row + 2, col + 1];
+                        cell.Validation.Delete();
+                        cell.Validation.Add(XlDVType.xlValidateList,
+                                            XlDVAlertStyle.xlValidAlertInformation,
+                                            XlFormatConditionOperator.xlBetween,
+                                            lastNamesList,
+                                            Type.Missing);                                           
+                        cell.Validation.IgnoreBlank = true;
+                        cell.Validation.InCellDropdown = true;
+                        cell.Value = "";
+                    }
+                    else //Every other column
+                    {   
+                        if(col < 4)        //Only want to grab information up with section and course name
+                            current += data + ",";
+                        data = ds.Tables[0].Rows[row].ItemArray[col].ToString();
+                        final_report.Cells[row + 2, col + 1] = data;
+                    }
                 }
+                if(row > 1)     //Creating the border, skipping the header row
+                    if (!current.Equals(previous))
+                    {
+                        var rng = "A" + (row + 2) + ":R18";
+                        final_report.Cells.Range[rng].Borders[_Excel.XlBordersIndex.xlEdgeTop].LineStyle = _Excel.XlLineStyle.xlContinuous;
+                        final_report.Cells.Range[rng].Borders[_Excel.XlBordersIndex.xlEdgeTop].Weight = 3d;
+                    }
+                previous = current;
             }
         }
     }
