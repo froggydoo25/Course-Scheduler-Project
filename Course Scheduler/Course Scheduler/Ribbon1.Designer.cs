@@ -42,6 +42,7 @@
             this.border_button = this.Factory.CreateRibbonButton();
             this.group1 = this.Factory.CreateRibbonGroup();
             this.button1 = this.Factory.CreateRibbonButton();
+            this.button2 = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.report_group.SuspendLayout();
             this.format_group.SuspendLayout();
@@ -90,6 +91,7 @@
             // group1
             // 
             this.group1.Items.Add(this.button1);
+            this.group1.Items.Add(this.button2);
             this.group1.Label = "Update";
             this.group1.Name = "group1";
             // 
@@ -98,6 +100,11 @@
             this.button1.Label = "Update Database from Room Occupancy";
             this.button1.Name = "button1";
             this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click_1);
+            // 
+            // button2
+            // 
+            this.button2.Label = "Update Professor info from Final Report";
+            this.button2.Name = "button2";
             // 
             // Ribbon1
             // 
@@ -127,6 +134,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton border_button;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button2;
     }
 
     partial class ThisRibbonCollection
