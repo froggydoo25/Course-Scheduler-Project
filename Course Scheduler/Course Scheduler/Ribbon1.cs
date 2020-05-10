@@ -31,11 +31,6 @@ namespace Course_Scheduler
             r.createBorder();
         }
 
-        private void button1_Click(object sender, RibbonControlEventArgs e)
-        {
-            r.addLeadingZero();
-        }
-
         private void button1_Click_1(object sender, RibbonControlEventArgs e)
         {
             u.WriteToDatabase();
