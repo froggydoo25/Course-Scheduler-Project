@@ -31,9 +31,24 @@ namespace Course_Scheduler
             r.createBorder();
         }
 
+        private void button1_Click(object sender, RibbonControlEventArgs e)
+        {
+            r.addLeadingZero();
+        }
+
         private void button1_Click_1(object sender, RibbonControlEventArgs e)
         {
             u.WriteToDatabase();
+        }
+
+        private void button3_Click(object sender, RibbonControlEventArgs e)
+        {
+
+        }
+
+        private void button4_Click(object sender, RibbonControlEventArgs e)
+        {
+
         }
     }
 }

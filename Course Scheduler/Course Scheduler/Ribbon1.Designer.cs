@@ -43,10 +43,14 @@
             this.group1 = this.Factory.CreateRibbonGroup();
             this.button1 = this.Factory.CreateRibbonButton();
             this.button2 = this.Factory.CreateRibbonButton();
+            this.group2 = this.Factory.CreateRibbonGroup();
+            this.button3 = this.Factory.CreateRibbonButton();
+            this.button4 = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.report_group.SuspendLayout();
             this.format_group.SuspendLayout();
             this.group1.SuspendLayout();
+            this.group2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tab1
@@ -54,6 +58,7 @@
             this.tab1.Groups.Add(this.report_group);
             this.tab1.Groups.Add(this.format_group);
             this.tab1.Groups.Add(this.group1);
+            this.tab1.Groups.Add(this.group2);
             this.tab1.Label = "Course Scheduler";
             this.tab1.Name = "tab1";
             // 
@@ -106,6 +111,25 @@
             this.button2.Label = "Update Professor info from Final Report";
             this.button2.Name = "button2";
             // 
+            // group2
+            // 
+            this.group2.Items.Add(this.button4);
+            this.group2.Items.Add(this.button3);
+            this.group2.Label = "Clearing Database";
+            this.group2.Name = "group2";
+            // 
+            // button3
+            // 
+            this.button3.Label = "Clear All Sections";
+            this.button3.Name = "button3";
+            this.button3.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.Label = "Clear Schedule Only";
+            this.button4.Name = "button4";
+            this.button4.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button4_Click);
+            // 
             // Ribbon1
             // 
             this.Name = "Ribbon1";
@@ -120,6 +144,8 @@
             this.format_group.PerformLayout();
             this.group1.ResumeLayout(false);
             this.group1.PerformLayout();
+            this.group2.ResumeLayout(false);
+            this.group2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -135,6 +161,9 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button2;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group2;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button3;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button4;
     }
 
     partial class ThisRibbonCollection

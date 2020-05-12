@@ -204,5 +204,32 @@ namespace Course_Scheduler
                     result += ds.Tables[0].Rows[i].ItemArray[j].ToString() + ",";
             return result;
         }
+
+        // This clears everything in the database related to scheduling. Use this for a new semester.
+        public void clearAllSections()
+        {
+            MySql.Data.MySqlClient.MySqlCommand cmd1;
+            MySql.Data.MySqlClient.MySqlCommand cmd2;
+            MySql.Data.MySqlClient.MySqlDataAdapter da = new MySql.Data.MySqlClient.MySqlDataAdapter();
+
+            cmd1 = new MySql.Data.MySqlClient.MySqlCommand("clearAllSchedules", cnn);
+            cmd1.CommandType = CommandType.StoredProcedure;
+            cmd1.ExecuteNonQuery();
+
+            cmd2 = new MySql.Data.MySqlClient.MySqlCommand("clearAllSections", cnn);
+            cmd2.CommandType = CommandType.StoredProcedure;
+            cmd2.ExecuteNonQuery();
+        }
+
+        // This clears only the current scheduled slots. Use this to start over for the current semester.
+        public void clearScheduleOnly()
+        {
+            MySql.Data.MySqlClient.MySqlCommand cmd1;
+            MySql.Data.MySqlClient.MySqlDataAdapter da = new MySql.Data.MySqlClient.MySqlDataAdapter();
+
+            cmd1 = new MySql.Data.MySqlClient.MySqlCommand("clearAllSchedules", cnn);
+            cmd1.CommandType = CommandType.StoredProcedure;
+            cmd1.ExecuteNonQuery();
+        }
     }
 }
