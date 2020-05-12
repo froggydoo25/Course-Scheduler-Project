@@ -1,13 +1,13 @@
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: localhost    Database: course_scheduler
+-- Host: localhost    Database: sweng
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
+/*!50503 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -98,6 +98,64 @@ INSERT INTO `instructor` VALUES (1,'Adjunct','Ola','Ajaj',NULL),(2,'Adjunct','St
 UNLOCK TABLES;
 
 --
+-- Table structure for table `instructor_preference_course`
+--
+
+DROP TABLE IF EXISTS `instructor_preference_course`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `instructor_preference_course` (
+  `instructor_perference_course_id` int NOT NULL AUTO_INCREMENT,
+  `course_id` int DEFAULT NULL,
+  `instructor_id` int DEFAULT NULL,
+  `course_perfered` tinyint DEFAULT NULL,
+  PRIMARY KEY (`instructor_perference_course_id`),
+  KEY `course_id_fk_in_IPC_idx` (`course_id`),
+  KEY `instr_in_ipc_idx` (`instructor_id`),
+  CONSTRAINT `course_in_ipc` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `instr_in_ipc` FOREIGN KEY (`instructor_id`) REFERENCES `instructor` (`instructor_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `instructor_preference_course`
+--
+
+LOCK TABLES `instructor_preference_course` WRITE;
+/*!40000 ALTER TABLE `instructor_preference_course` DISABLE KEYS */;
+/*!40000 ALTER TABLE `instructor_preference_course` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `instructor_preference_timeslot`
+--
+
+DROP TABLE IF EXISTS `instructor_preference_timeslot`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `instructor_preference_timeslot` (
+  `instructor_perference_timeslot_id` int NOT NULL AUTO_INCREMENT,
+  `instructor_id` int DEFAULT NULL,
+  `time_slot_id` int DEFAULT NULL,
+  `timeslot_prefered` tinyint DEFAULT NULL,
+  PRIMARY KEY (`instructor_perference_timeslot_id`),
+  KEY `instr_in_ipt_idx` (`instructor_id`),
+  KEY `tsa_in_ipt_idx` (`time_slot_id`),
+  CONSTRAINT `instr_in_ipt` FOREIGN KEY (`instructor_id`) REFERENCES `instructor` (`instructor_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `tsa_in_ipt` FOREIGN KEY (`time_slot_id`) REFERENCES `time_slot` (`time_slot_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `instructor_preference_timeslot`
+--
+
+LOCK TABLES `instructor_preference_timeslot` WRITE;
+/*!40000 ALTER TABLE `instructor_preference_timeslot` DISABLE KEYS */;
+/*!40000 ALTER TABLE `instructor_preference_timeslot` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `room`
 --
 
@@ -147,7 +205,7 @@ CREATE TABLE `schedules` (
   CONSTRAINT `room_in_sch` FOREIGN KEY (`room_id`) REFERENCES `room` (`room_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `section_in_sch` FOREIGN KEY (`section_id`) REFERENCES `section` (`section_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `ts_in_sch` FOREIGN KEY (`time_slot_id`) REFERENCES `time_slot` (`time_slot_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=120 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=124 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,7 +214,7 @@ CREATE TABLE `schedules` (
 
 LOCK TABLES `schedules` WRITE;
 /*!40000 ALTER TABLE `schedules` DISABLE KEYS */;
-INSERT INTO `schedules` VALUES (1,13,1,2,1),(2,13,1,2,2),(3,85,2,2,3),(4,85,2,2,4),(5,13,4,2,5),(6,13,4,2,6),(7,96,5,2,7),(8,8,6,2,8),(9,8,7,2,9),(10,10,8,2,10),(11,10,9,2,10),(12,37,10,2,11),(13,37,10,2,12),(15,88,12,2,14),(16,88,13,2,15),(17,96,14,2,16),(18,88,15,2,17),(19,60,16,2,18),(22,13,19,2,1),(23,13,19,2,2),(24,85,20,2,3),(25,85,20,2,4),(26,13,22,2,5),(27,13,22,2,6),(28,96,23,2,7),(29,8,24,2,8),(30,8,25,2,9),(31,10,26,2,10),(32,10,27,2,10),(33,37,28,2,11),(34,37,28,2,12),(36,88,30,2,14),(37,88,31,2,15),(38,96,32,2,16),(39,88,33,2,17),(40,60,34,2,18),(41,58,35,2,21),(42,58,35,2,22),(43,58,36,2,21),(44,58,36,2,22),(45,60,37,2,23),(46,60,38,2,23),(49,14,42,2,25),(50,24,43,2,26),(51,13,22,4,1),(52,13,23,4,1),(53,13,31,4,2),(55,85,37,4,3),(56,85,38,4,3),(58,85,40,4,4),(59,13,26,4,5),(60,13,27,4,5),(61,13,35,4,6),(62,13,36,4,6),(63,37,11,4,11),(64,37,12,4,11),(65,37,38,4,12),(66,37,39,4,12),(73,13,43,4,1),(74,45,11,2,13),(76,45,29,5,13),(89,13,32,9,2),(95,13,30,9,2),(96,13,29,9,2),(97,13,38,2,2),(98,13,38,2,3),(99,13,38,2,4),(113,13,38,1,16),(119,13,38,4,4);
+INSERT INTO `schedules` VALUES (1,13,1,2,1),(2,13,1,2,2),(3,85,2,2,3),(4,85,2,2,4),(5,13,4,2,5),(6,13,4,2,6),(7,96,5,2,7),(8,8,6,2,8),(9,8,7,2,9),(10,10,8,2,10),(11,10,9,2,10),(12,37,10,2,11),(13,37,10,2,12),(15,88,12,2,14),(16,88,13,2,15),(17,96,14,2,16),(18,88,15,2,17),(19,60,16,2,18),(22,13,19,2,1),(23,13,19,2,2),(24,85,20,2,3),(25,85,20,2,4),(26,13,22,2,5),(27,13,22,2,6),(28,96,23,2,7),(29,8,24,2,8),(30,8,25,2,9),(31,10,26,2,10),(32,10,27,2,10),(33,37,28,2,11),(34,37,28,2,12),(36,88,30,2,14),(37,88,31,2,15),(38,96,32,2,16),(39,88,33,2,17),(40,60,34,2,18),(41,58,35,2,21),(42,58,35,2,22),(43,58,36,2,21),(44,58,36,2,22),(45,60,37,2,23),(46,60,38,2,23),(49,14,42,2,25),(50,24,43,2,26),(51,13,22,4,1),(52,13,23,4,1),(53,13,31,4,2),(55,85,37,4,3),(56,85,38,4,3),(58,85,40,4,4),(59,13,26,4,5),(60,13,27,4,5),(61,13,35,4,6),(62,13,36,4,6),(63,37,11,4,11),(64,37,12,4,11),(65,37,38,4,12),(66,37,39,4,12),(73,13,43,4,1),(74,45,11,2,13),(76,45,29,5,13),(89,13,32,9,2),(95,13,30,9,2),(96,13,29,9,2),(97,13,38,2,2),(98,13,38,2,3),(99,13,38,2,4),(113,13,38,1,16),(119,13,38,4,4),(122,NULL,1,1,1);
 /*!40000 ALTER TABLE `schedules` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -308,7 +366,7 @@ INSERT INTO `time_slot` VALUES (1,'M','08:00:00',NULL),(2,'M','09:30:00',NULL),(
 UNLOCK TABLES;
 
 --
--- Dumping routines for database 'course_scheduler'
+-- Dumping routines for database 'sweng'
 --
 /*!50003 DROP PROCEDURE IF EXISTS `clearAllSchedules` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -320,7 +378,7 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `clearAllSchedules`()
+CREATE   PROCEDURE `clearAllSchedules`()
 BEGIN
 	declare n int default 0;
     declare i int default 0;
@@ -347,7 +405,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `clearAllSections`()
+CREATE   PROCEDURE `clearAllSections`()
 BEGIN
 	declare n int default 0;
     declare i int default 0;
@@ -374,7 +432,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `deleteAllSectionsinTimeSlot`(
+CREATE   PROCEDURE `deleteAllSectionsinTimeSlot`(
 	in timeSlotDay varchar(9),
     in timeSlotStartTime time,
     in roomBuilding varchar(45),
@@ -419,7 +477,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `deleteCourseFromDatabase`(
+CREATE   PROCEDURE `deleteCourseFromDatabase`(
 	in courseName varchar(255),
     out result varchar(10)
 )
@@ -453,7 +511,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `deleteInstructorFromDatabase`(
+CREATE   PROCEDURE `deleteInstructorFromDatabase`(
 	in bannerID char(9),
     out result varchar(10)
 )
@@ -487,7 +545,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `deleteScheduledSlot`(
+CREATE   PROCEDURE `deleteScheduledSlot`(
     in timeSlotDay varchar(9),
     in timeSlotStartTime time,
     in roomBuilding varchar(45),
@@ -553,7 +611,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `deleteSectionBasedOnScheduleInfo`(
+CREATE   PROCEDURE `deleteSectionBasedOnScheduleInfo`(
 	in timeSlotDay varchar(9),
     in timeSlotStartTime time,
     in roomBuilding varchar(45),
@@ -639,7 +697,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `deleteSessionBasedOnSessionName`(
+CREATE   PROCEDURE `deleteSessionBasedOnSessionName`(
 	in sessionName varchar(255),
     out result varchar(10)
 )
@@ -672,7 +730,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `FinalReport`()
+CREATE   PROCEDURE `FinalReport`()
 Begin
 	select c.course_subject_code, c.course_number, 
 	s.section_number, c.course_title, i.banner_id,
@@ -704,7 +762,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `FinalReportSimplified`()
+CREATE   PROCEDURE `FinalReportSimplified`()
 begin
 	select c.course_subject_code, c.course_number, s.section_number, c.course_title, i.banner_id, 
     i.first_name,  i.last_name, 
@@ -738,7 +796,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `getCourseInfoByAbbr_Scheduling`(
+CREATE   PROCEDURE `getCourseInfoByAbbr_Scheduling`(
 	in abbreviation varchar(45)
 )
 BEGIN 
@@ -779,7 +837,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `getCourseInfoByAbbr_WithoutScheduling`(
+CREATE   PROCEDURE `getCourseInfoByAbbr_WithoutScheduling`(
 	in abbreviation varchar(45)
 )
 BEGIN
@@ -806,7 +864,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `getCourseInfoByBuilding_Scheduling`(
+CREATE   PROCEDURE `getCourseInfoByBuilding_Scheduling`(
 	in building_name varchar(45)
 )
 begin
@@ -848,7 +906,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `getCourseInfoByCourseNumber_Scheduling`(
+CREATE   PROCEDURE `getCourseInfoByCourseNumber_Scheduling`(
 	in courseNum char(5)
 )
 BEGIN
@@ -890,7 +948,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `getCourseInfoByCourseNumber_WithoutScheduling`(
+CREATE   PROCEDURE `getCourseInfoByCourseNumber_WithoutScheduling`(
 	in courseNum char(5)
 )
 BEGIN
@@ -917,7 +975,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `getCourseInfoByDay_Scheduling`(
+CREATE   PROCEDURE `getCourseInfoByDay_Scheduling`(
 	in week_day varchar(9)
 )
 begin
@@ -959,7 +1017,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `getCourseInfoByRoom_Scheduling`(
+CREATE   PROCEDURE `getCourseInfoByRoom_Scheduling`(
 	in room_info varchar(255)
 )
 begin
@@ -1000,7 +1058,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `getInstructorInfo_General_Scheduling`()
+CREATE   PROCEDURE `getInstructorInfo_General_Scheduling`()
 BEGIN
 	select 
 		distinct i.banner_id, concat(i.first_name, " ", i.last_name) as full_name, i.instructor_type
@@ -1021,7 +1079,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `getInstructorInfo_General_WithoutScheduling`()
+CREATE   PROCEDURE `getInstructorInfo_General_WithoutScheduling`()
 BEGIN
 	select 
 		i.banner_id, 
@@ -1044,7 +1102,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `getInstructorName_Scheduling`(
+CREATE   PROCEDURE `getInstructorName_Scheduling`(
 	in instr_name varchar(255)
 )
 BEGIN
@@ -1068,7 +1126,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `getInstructorName_WithoutScheduling`(
+CREATE   PROCEDURE `getInstructorName_WithoutScheduling`(
 	in instr_name varchar(255)
 )
 BEGIN
@@ -1092,7 +1150,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `getOldInstructorTeaching`(
+CREATE   PROCEDURE `getOldInstructorTeaching`(
 	in day_of_week varchar(5),
     in start_time time,
     in room_info varchar(255),
@@ -1150,7 +1208,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `getOldScheduledInfo`(
+CREATE   PROCEDURE `getOldScheduledInfo`(
 	in day_of_week varchar(5),
     in start_time time,
     in room_info varchar(255),
@@ -1235,7 +1293,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `getTimeAndLocationofCourse_Scheduling`(
+CREATE   PROCEDURE `getTimeAndLocationofCourse_Scheduling`(
 	in course_abbreviation varchar(255),
 	in section_number varchar(5)
 )
@@ -1269,7 +1327,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `insertCourseIntoDatabase`(
+CREATE   PROCEDURE `insertCourseIntoDatabase`(
 	in course_title varchar(255),
     in course_credit_student varchar(5),
     in course_subject_code varchar(5),
@@ -1309,7 +1367,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `insertInstructorIntoDatabase`(
+CREATE   PROCEDURE `insertInstructorIntoDatabase`(
 	in firstName varchar(255),
 	in lastName varchar(255),
     in bannerID char(9),
@@ -1346,7 +1404,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `insertRoomIntoDatabase`(
+CREATE   PROCEDURE `insertRoomIntoDatabase`(
 	in buildingName varchar(45),
     in campusLocation varchar(45),
     in roomType varchar(45),
@@ -1384,7 +1442,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `insertScheduledSlot`(
+CREATE   PROCEDURE `insertScheduledSlot`(
 	in instructorName varchar(255),
     in timeSlotDay varchar(9),
 	in timeSlotStartTime time,
@@ -1482,7 +1540,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `insertSectionIntoDatabase`(
+CREATE   PROCEDURE `insertSectionIntoDatabase`(
     in modifier varchar(45),
     in section_number varchar(5),
     in duration int(11),
@@ -1530,7 +1588,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `insertSessionIntoDatabase`(
+CREATE   PROCEDURE `insertSessionIntoDatabase`(
 	in session_name varchar(255),
     in start_time date,
     in end_time date,
@@ -1571,7 +1629,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `listAllCourses`()
+CREATE   PROCEDURE `listAllCourses`()
 BEGIN
 	select course_title, course_abbreviation
     from Course c;
@@ -1591,7 +1649,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `updateCourseInfo`(
+CREATE   PROCEDURE `updateCourseInfo`(
 	in oldCourseName varchar(255),
 	in newCourseName varchar(255),
     in newCourseAbb varchar(10),
@@ -1704,7 +1762,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `updateInstructorOfScheduleIntoDatabase`(
+CREATE   PROCEDURE `updateInstructorOfScheduleIntoDatabase`(
 	in instructorName varchar(255),
     in oldInstructorName varchar(255),
     in day_of_week varchar(5),
@@ -1842,7 +1900,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `updateRoomOfScheduleIntoDatabase`(
+CREATE   PROCEDURE `updateRoomOfScheduleIntoDatabase`(
 	in instructorName varchar(255),
     in day_of_week varchar(5),
     in start_time time,
@@ -2077,7 +2135,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `updateTimeSlotOfScheduleIntoDatabase`(
+CREATE   PROCEDURE `updateTimeSlotOfScheduleIntoDatabase`(
 	in instructorName varchar(255),
     in day_of_week varchar(5),
     in start_time time,
@@ -2176,4 +2234,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-10  0:02:34
+-- Dump completed on 2020-05-12 13:03:11
