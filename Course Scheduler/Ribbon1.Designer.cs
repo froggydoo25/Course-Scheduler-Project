@@ -41,11 +41,11 @@
             this.center_align_button = this.Factory.CreateRibbonButton();
             this.border_button = this.Factory.CreateRibbonButton();
             this.group1 = this.Factory.CreateRibbonGroup();
+            this.insert_courses_button = this.Factory.CreateRibbonButton();
             this.update_prof_button = this.Factory.CreateRibbonButton();
             this.group2 = this.Factory.CreateRibbonGroup();
             this.clear_sections_button = this.Factory.CreateRibbonButton();
             this.clear_schedule_button = this.Factory.CreateRibbonButton();
-            this.insert_courses_button = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.report_group.SuspendLayout();
             this.format_group.SuspendLayout();
@@ -100,6 +100,12 @@
             this.group1.Label = "Update";
             this.group1.Name = "group1";
             // 
+            // insert_courses_button
+            // 
+            this.insert_courses_button.Label = "Insert Courses and Sections";
+            this.insert_courses_button.Name = "insert_courses_button";
+            this.insert_courses_button.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.insert_courses_button_Click);
+            // 
             // update_prof_button
             // 
             this.update_prof_button.Label = "Update Professor Information";
@@ -124,12 +130,6 @@
             this.clear_schedule_button.Label = "Clear Schedule";
             this.clear_schedule_button.Name = "clear_schedule_button";
             this.clear_schedule_button.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.clear_schedule_button_Click);
-            // 
-            // insert_courses_button
-            // 
-            this.insert_courses_button.Label = "Insert Courses and Sections";
-            this.insert_courses_button.Name = "insert_courses_button";
-            this.insert_courses_button.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.insert_courses_button_Click);
             // 
             // Ribbon1
             // 
