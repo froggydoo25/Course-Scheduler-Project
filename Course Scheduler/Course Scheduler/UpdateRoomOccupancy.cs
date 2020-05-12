@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using Microsoft.Office.Interop.Excel;
 using _Excel = Microsoft.Office.Interop.Excel;
 using Course_Scheduler;
+using MySql.Data.MySqlClient;
 
 namespace Course_Sceduler
 {
@@ -21,64 +22,14 @@ namespace Course_Sceduler
         string connectionString = null;
         string sql = null;
         string data = null;
-        MySql.Data.MySqlClient.MySqlConnection cnn;
+        private MySqlConnection cnn;
 
         public UpdateRoomOccupancy()
         {
-            connectionString = "server=localhost;uid=root;pwd=password;database=sweng";
-            cnn = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
-            cnn.Open();
+            this.cnn = new MySqlConnection();
+            cnn.ConnectionString = "server=localhost;uid=root;pwd=password;database=sweng";
+            this.cnn.Open();
         }
-
-        public void WriteToDatabase()
-        {//i = x coord or col
-            rooms = Globals.ThisAddIn.Application.ActiveSheet;
-            for (int i = 2; i < 24; i++) //Use 24 since that's the highest X value with data
-            {//j = y coord or row
-                for (int j = 5; j < 60; j++) //Use 60 since that's the highest Y value with data
-                {
-                    string building = AssignBuilding(i, j);
-                    string roomNum = AssignRoomNum(i, j);
-                    char day = AssignDay(i);
-                    string time = AssignTime(j);
-                    if ((day != '\0') && (time != "") && (building != "") && (roomNum != ""))
-                    {
-                        string abbrevConcatSects = ReadCell(j, i, rooms);
-                        string abbrev = AssignAbbrev(abbrevConcatSects);
-                        int[] sects = AssignSections(abbrevConcatSects);
-                        DeleteScheduledSlot(day, time, building, roomNum);
-
-                        if (abbrev != "" && sects != null)
-                        { 
-                            foreach (int q in sects)
-                            {
-                                InsertIntoDatabase(day, time, building, roomNum, q, abbrev);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        private string ReadCell(int row, int col, Worksheet sheet)
-        {
-            if (sheet.Cells[row, col].Value2 != null) //problem
-                return sheet.Cells[row, col].Value2 + ""; 
-            return "";
-        }
-
-        public void InsertIntoDatabase(char day, string time, string building, string roomNum, int sectNum, string abbrev)
-        {
-            sql = "call insertScheduledSlot(" + "NULL" + ", '" + day + "', '" + time + "', '" + building + "', '" + roomNum + "', '" + sectNum + "', '" + abbrev + "');";
-            MySql.Data.MySqlClient.MySqlDataAdapter dscmd = new MySql.Data.MySqlClient.MySqlDataAdapter(sql, cnn);
-        }
-
-        public void DeleteScheduledSlot(char day, string time, string building, string roomNum)
-        {
-            sql = "call deleteAllSectionsinTimeSlot('" + day + "', '" + time + "', '" + building + "', '" + roomNum + "');";
-            MySql.Data.MySqlClient.MySqlDataAdapter dscmd = new MySql.Data.MySqlClient.MySqlDataAdapter(sql, cnn);
-        }
-
         private char AssignDay(int xCoord)
         {
             char result = '\0';
@@ -277,6 +228,105 @@ namespace Course_Sceduler
             }
 
             return sects;
+        }
+
+        public void clearAllSections()
+        {
+            MySql.Data.MySqlClient.MySqlCommand cmd1;
+            MySql.Data.MySqlClient.MySqlCommand cmd2;
+
+            cmd1 = new MySql.Data.MySqlClient.MySqlCommand("clearAllSchedules", cnn);
+            cmd1.CommandType = CommandType.StoredProcedure;
+            cmd1.ExecuteNonQuery();
+
+            cmd2 = new MySql.Data.MySqlClient.MySqlCommand("clearAllSections", cnn);
+            cmd2.CommandType = CommandType.StoredProcedure;
+            cmd2.ExecuteNonQuery();
+        }
+
+        // This clears only the current scheduled slots. Use this to start over for the current semester.
+        public void clearScheduleOnly()
+        {
+            MySql.Data.MySqlClient.MySqlCommand cmd1;
+
+            cmd1 = new MySql.Data.MySqlClient.MySqlCommand("clearAllSchedules", cnn);
+            cmd1.CommandType = CommandType.StoredProcedure;
+            cmd1.ExecuteNonQuery();
+        }
+
+        public void DeleteScheduledSlot(char day, string time, string building, string roomNum)
+        {
+            sql = "call deleteAllSectionsinTimeSlot('" + day + "', '" + time + "', '" + building + "', '" + roomNum + "');";
+            MySql.Data.MySqlClient.MySqlDataAdapter dscmd = new MySql.Data.MySqlClient.MySqlDataAdapter(sql, cnn);
+        }
+
+        public void InsertIntoDatabase(char day, string time, string building, string roomNum, int sectNum, string abbrev)
+        {
+            MySqlCommand sql = new MySqlCommand("insertScheduledSlot", this.cnn);
+            sql.CommandType = CommandType.StoredProcedure;
+
+            sql.Parameters.AddWithValue("@instructorName", "NULL");
+            sql.Parameters["@instructorName"].Direction = ParameterDirection.Input;
+
+            sql.Parameters.AddWithValue("@timeSlotDay", day);
+            sql.Parameters["@timeSlotDay"].Direction = ParameterDirection.Input;
+
+            sql.Parameters.AddWithValue("@timeSlotStartTime", time);
+            sql.Parameters["@timeSlotStartTime"].Direction = ParameterDirection.Input;
+
+            sql.Parameters.AddWithValue("@roomBuilding", building);
+            sql.Parameters["@roomBuilding"].Direction = ParameterDirection.Input;
+
+            sql.Parameters.AddWithValue("@roomNumber", roomNum);
+            sql.Parameters["@roomNumber"].Direction = ParameterDirection.Input;
+
+            sql.Parameters.AddWithValue("@sectionNumber", sectNum);
+            sql.Parameters["@sectionNumber"].Direction = ParameterDirection.Input;
+
+            sql.Parameters.AddWithValue("@course_abbreviation", abbrev);
+            sql.Parameters["@course_abbreviation"].Direction = ParameterDirection.Input;
+
+            sql.Parameters.AddWithValue("@result", MySqlDbType.VarChar);
+            sql.Parameters["@result"].Direction = ParameterDirection.Output;
+
+            sql.ExecuteNonQuery();
+        }
+
+        private string ReadCell(int row, int col, Worksheet sheet)
+        {
+            if (sheet.Cells[row, col].Value2 != null) //problem
+                return sheet.Cells[row, col].Value2 + "";
+            return "";
+        }
+
+        public void WriteToDatabase()
+        {//i = x coord or col
+            rooms = Globals.ThisAddIn.Application.ActiveSheet;
+            for (int i = 2; i < 24; i++) //Use 24 since that's the highest X value with data
+            {//j = y coord or row
+                for (int j = 5; j < 60; j++) //Use 60 since that's the highest Y value with data
+                {
+                    string building = AssignBuilding(i, j);
+                    string roomNum = AssignRoomNum(i, j);
+                    char day = AssignDay(i);
+                    string time = AssignTime(j);
+                    if ((day != '\0') && (time != "") && (building != "") && (roomNum != ""))
+                    {
+                        string abbrevConcatSects = ReadCell(j, i, rooms);
+                        string abbrev = AssignAbbrev(abbrevConcatSects);
+                        //int[] sects = AssignSections(abbrevConcatSects);
+                        DeleteScheduledSlot(day, time, building, roomNum);
+                        InsertIntoDatabase(day, time, building, roomNum, 1, "IOOP");
+                        //if (abbrev != "" && sects != null)
+                        //{ 
+                        //foreach (int q in sects)
+                        // {
+
+                        //}
+                        //}
+                    }
+                }
+            }
         }
     }
 }

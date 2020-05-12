@@ -31,24 +31,24 @@ namespace Course_Scheduler
             r.createBorder();
         }
 
-        private void button1_Click(object sender, RibbonControlEventArgs e)
+        private void clear_sections_button_Click(object sender, RibbonControlEventArgs e)
         {
-            r.addLeadingZero();
+            u.clearAllSections();
         }
 
-        private void button1_Click_1(object sender, RibbonControlEventArgs e)
+        private void clear_schedule_button_Click(object sender, RibbonControlEventArgs e)
+        {
+            u.clearScheduleOnly();
+        }
+
+        private void update_prof_button_Click(object sender, RibbonControlEventArgs e)
+        {
+
+        }
+
+        private void insert_courses_button_Click(object sender, RibbonControlEventArgs e)
         {
             u.WriteToDatabase();
-        }
-
-        private void button3_Click(object sender, RibbonControlEventArgs e)
-        {
-
-        }
-
-        private void button4_Click(object sender, RibbonControlEventArgs e)
-        {
-
         }
     }
 }

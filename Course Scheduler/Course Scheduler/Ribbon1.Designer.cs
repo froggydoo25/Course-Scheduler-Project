@@ -41,11 +41,11 @@
             this.center_align_button = this.Factory.CreateRibbonButton();
             this.border_button = this.Factory.CreateRibbonButton();
             this.group1 = this.Factory.CreateRibbonGroup();
-            this.button1 = this.Factory.CreateRibbonButton();
-            this.button2 = this.Factory.CreateRibbonButton();
+            this.update_prof_button = this.Factory.CreateRibbonButton();
             this.group2 = this.Factory.CreateRibbonGroup();
-            this.button3 = this.Factory.CreateRibbonButton();
-            this.button4 = this.Factory.CreateRibbonButton();
+            this.clear_sections_button = this.Factory.CreateRibbonButton();
+            this.clear_schedule_button = this.Factory.CreateRibbonButton();
+            this.insert_courses_button = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.report_group.SuspendLayout();
             this.format_group.SuspendLayout();
@@ -95,40 +95,41 @@
             // 
             // group1
             // 
-            this.group1.Items.Add(this.button1);
-            this.group1.Items.Add(this.button2);
+            this.group1.Items.Add(this.insert_courses_button);
+            this.group1.Items.Add(this.update_prof_button);
             this.group1.Label = "Update";
             this.group1.Name = "group1";
             // 
-            // button1
+            // update_prof_button
             // 
-            this.button1.Label = "Update Database from Room Occupancy";
-            this.button1.Name = "button1";
-            this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click_1);
-            // 
-            // button2
-            // 
-            this.button2.Label = "Update Professor info from Final Report";
-            this.button2.Name = "button2";
+            this.update_prof_button.Label = "Update Professor Information";
+            this.update_prof_button.Name = "update_prof_button";
+            this.update_prof_button.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.update_prof_button_Click);
             // 
             // group2
             // 
-            this.group2.Items.Add(this.button4);
-            this.group2.Items.Add(this.button3);
+            this.group2.Items.Add(this.clear_sections_button);
+            this.group2.Items.Add(this.clear_schedule_button);
             this.group2.Label = "Clearing Database";
             this.group2.Name = "group2";
             // 
-            // button3
+            // clear_sections_button
             // 
-            this.button3.Label = "Clear All Sections";
-            this.button3.Name = "button3";
-            this.button3.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button3_Click);
+            this.clear_sections_button.Label = "Clear Sections";
+            this.clear_sections_button.Name = "clear_sections_button";
+            this.clear_sections_button.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.clear_sections_button_Click);
             // 
-            // button4
+            // clear_schedule_button
             // 
-            this.button4.Label = "Clear Schedule Only";
-            this.button4.Name = "button4";
-            this.button4.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button4_Click);
+            this.clear_schedule_button.Label = "Clear Schedule";
+            this.clear_schedule_button.Name = "clear_schedule_button";
+            this.clear_schedule_button.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.clear_schedule_button_Click);
+            // 
+            // insert_courses_button
+            // 
+            this.insert_courses_button.Label = "Insert Courses and Sections";
+            this.insert_courses_button.Name = "insert_courses_button";
+            this.insert_courses_button.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.insert_courses_button_Click);
             // 
             // Ribbon1
             // 
@@ -159,11 +160,11 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton center_align_button;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton border_button;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button1;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button2;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton update_prof_button;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group2;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button3;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button4;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton clear_sections_button;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton clear_schedule_button;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton insert_courses_button;
     }
 
     partial class ThisRibbonCollection
