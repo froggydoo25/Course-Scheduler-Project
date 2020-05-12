@@ -125,7 +125,7 @@ namespace Course_Scheduler
 
         public void reportFromDB()
         {
-            sql = "call FinalReportSimplified();";
+            sql = "call FinalReport();";
             MySql.Data.MySqlClient.MySqlDataAdapter dscmd = new MySql.Data.MySqlClient.MySqlDataAdapter(sql, cnn);
             MySql.Data.MySqlClient.MySqlDataAdapter Ids = new MySql.Data.MySqlClient.MySqlDataAdapter("select banner_id from instructor order by banner_id;", cnn);
             MySql.Data.MySqlClient.MySqlDataAdapter Fname = new MySql.Data.MySqlClient.MySqlDataAdapter("select first_name from instructor order by first_name;", cnn);
@@ -140,50 +140,50 @@ namespace Course_Scheduler
             {
                 for (int col = 0; col <= ds.Tables[0].Columns.Count - 1; col++)
                 {
-                    if (col == 1)       //Adding leasing 0's to course number if it needs it
+                    if (col == 1)       //Adding leasing 0's to course number
                     {
                         final_report.Cells[row + 2, col + 1].NumberFormat = "@";
                         final_report.Cells[row + 2, col + 1] = ds.Tables[0].Rows[row].ItemArray[col].ToString();
                     }
-                    else if (col == 4)     //Professor Bannar ID Col
-                    {
-                        var cell = (Range)final_report.Cells[row + 2, col + 1];
-                        cell.Validation.Delete();
-                        cell.Validation.Add(XlDVType.xlValidateList,
-                                            XlDVAlertStyle.xlValidAlertInformation,
-                                            XlFormatConditionOperator.xlBetween,
-                                            IdList,
-                                            Type.Missing);
-                        cell.Validation.IgnoreBlank = true;
-                        cell.Validation.InCellDropdown = true;
-                        cell.Value = "";
-                    }
-                    else if (col == 5)      //Professor First Names Col
-                    {
-                        var cell = (Range)final_report.Cells[row + 2, col + 1];
-                        cell.Validation.Delete();
-                        cell.Validation.Add(XlDVType.xlValidateList,
-                                            XlDVAlertStyle.xlValidAlertInformation,
-                                            XlFormatConditionOperator.xlBetween,
-                                            firstNameList,
-                                            Type.Missing);
-                        cell.Validation.IgnoreBlank = true;
-                        cell.Validation.InCellDropdown = true;
-                        cell.Value = "";
-                    }
-                    else if (col == 6)     //Professor Last Names Col
-                    {
-                        var cell = (Range)final_report.Cells[row + 2, col + 1];
-                        cell.Validation.Delete();
-                        cell.Validation.Add(XlDVType.xlValidateList,
-                                            XlDVAlertStyle.xlValidAlertInformation,
-                                            XlFormatConditionOperator.xlBetween,
-                                            lastNamesList,
-                                            Type.Missing);
-                        cell.Validation.IgnoreBlank = true;
-                        cell.Validation.InCellDropdown = true;
-                        cell.Value = "";
-                    }
+                    //else if (col == 4)     //Professor Bannar ID Col
+                    //{
+                    //    var cell = (Range)final_report.Cells[row + 2, col + 1];
+                    //    cell.Validation.Delete();
+                    //    cell.Validation.Add(XlDVType.xlValidateList,
+                    //                        XlDVAlertStyle.xlValidAlertInformation,
+                    //                        XlFormatConditionOperator.xlBetween,
+                    //                        IdList,
+                    //                        Type.Missing);
+                    //    cell.Validation.IgnoreBlank = true;
+                    //    cell.Validation.InCellDropdown = true;
+                    //    cell.Value = "";
+                    //}
+                    //else if (col == 5)      //Professor First Names Col
+                    //{
+                    //    var cell = (Range)final_report.Cells[row + 2, col + 1];
+                    //    cell.Validation.Delete();
+                    //    cell.Validation.Add(XlDVType.xlValidateList,
+                    //                        XlDVAlertStyle.xlValidAlertInformation,
+                    //                        XlFormatConditionOperator.xlBetween,
+                    //                        firstNameList,
+                    //                        Type.Missing);
+                    //    cell.Validation.IgnoreBlank = true;
+                    //    cell.Validation.InCellDropdown = true;
+                    //    cell.Value = "";
+                    //}
+                    //else if (col == 6)     //Professor Last Names Col
+                    //{
+                    //    var cell = (Range)final_report.Cells[row + 2, col + 1];
+                    //    cell.Validation.Delete();
+                    //    cell.Validation.Add(XlDVType.xlValidateList,
+                    //                        XlDVAlertStyle.xlValidAlertInformation,
+                    //                        XlFormatConditionOperator.xlBetween,
+                    //                        lastNamesList,
+                    //                        Type.Missing);
+                    //    cell.Validation.IgnoreBlank = true;
+                    //    cell.Validation.InCellDropdown = true;
+                    //    cell.Value = "";
+                    //}
                     else //Every other column
                     {
                         data = ds.Tables[0].Rows[row].ItemArray[col].ToString();
@@ -194,7 +194,7 @@ namespace Course_Scheduler
         }
 
         //Creates a comma separated string of single attributes in DB
-        public String stringifySet(MySql.Data.MySqlClient.MySqlDataAdapter sql)
+        public string stringifySet(MySql.Data.MySqlClient.MySqlDataAdapter sql)
         {
             string result = "";
             DataSet ds = new DataSet();

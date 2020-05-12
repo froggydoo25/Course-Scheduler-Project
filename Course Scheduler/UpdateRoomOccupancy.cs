@@ -265,12 +265,13 @@ namespace Course_Sceduler
             MySqlCommand sql = new MySqlCommand("insertScheduledSlot", this.cnn);
             sql.CommandType = CommandType.StoredProcedure;
 
-            sql.Parameters.AddWithValue("@instructorName", "NULL");
+            sql.Parameters.AddWithValue("@instructorName", null);
             sql.Parameters["@instructorName"].Direction = ParameterDirection.Input;
 
             sql.Parameters.AddWithValue("@timeSlotDay", day);
             sql.Parameters["@timeSlotDay"].Direction = ParameterDirection.Input;
 
+            TimeSpan startTime = TimeSpan.Parse(time);
             sql.Parameters.AddWithValue("@timeSlotStartTime", time);
             sql.Parameters["@timeSlotStartTime"].Direction = ParameterDirection.Input;
 
@@ -286,7 +287,7 @@ namespace Course_Sceduler
             sql.Parameters.AddWithValue("@course_abbreviation", abbrev);
             sql.Parameters["@course_abbreviation"].Direction = ParameterDirection.Input;
 
-            sql.Parameters.AddWithValue("@result", MySqlDbType.VarChar);
+            sql.Parameters.Add("@result", MySqlDbType.VarChar);
             sql.Parameters["@result"].Direction = ParameterDirection.Output;
 
             sql.ExecuteNonQuery();
