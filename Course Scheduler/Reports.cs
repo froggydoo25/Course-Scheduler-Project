@@ -145,19 +145,6 @@ namespace Course_Scheduler
                         final_report.Cells[row + 2, col + 1].NumberFormat = "@";
                         final_report.Cells[row + 2, col + 1] = ds.Tables[0].Rows[row].ItemArray[col].ToString();
                     }
-                    //else if (col == 4)     //Professor Bannar ID Col
-                    //{
-                    //    var cell = (Range)final_report.Cells[row + 2, col + 1];
-                    //    cell.Validation.Delete();
-                    //    cell.Validation.Add(XlDVType.xlValidateList,
-                    //                        XlDVAlertStyle.xlValidAlertInformation,
-                    //                        XlFormatConditionOperator.xlBetween,
-                    //                        IdList,
-                    //                        Type.Missing);
-                    //    cell.Validation.IgnoreBlank = true;
-                    //    cell.Validation.InCellDropdown = true;
-                    //    cell.Value = "";
-                    //}
                     //else if (col == 5)      //Professor First Names Col
                     //{
                     //    var cell = (Range)final_report.Cells[row + 2, col + 1];

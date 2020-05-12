@@ -262,6 +262,34 @@ namespace Course_Sceduler
 
         public void InsertIntoDatabase(char day, string time, string building, string roomNum, int sectNum, string abbrev)
         {
+            // Inserting sections first
+            MySqlCommand cmm = new MySqlCommand("insertSectionIntoDatabase", this.cnn);
+            cmm.CommandType = CommandType.StoredProcedure;
+
+            cmm.Parameters.AddWithValue("@modifier", null);
+            cmm.Parameters["@modifier"].Direction = ParameterDirection.Input;
+
+            cmm.Parameters.AddWithValue("@section_number", sectNum);
+            cmm.Parameters["@section_number"].Direction = ParameterDirection.Input;
+
+            cmm.Parameters.AddWithValue("@duration", 75);
+            cmm.Parameters["@duration"].Direction = ParameterDirection.Input;
+
+            //Get the start date
+            cmm.Parameters.AddWithValue("@start_date_in_session", roomNum);
+            cmm.Parameters["@start_date_in_session"].Direction = ParameterDirection.Input;
+
+            //Get the end date
+            cmm.Parameters.AddWithValue("@end_date_in_session", sectNum);
+            cmm.Parameters["@end_date_in_session"].Direction = ParameterDirection.Input;
+
+            cmm.Parameters.AddWithValue("@course_abbreviation", abbrev);
+            cmm.Parameters["@course_abbreviation"].Direction = ParameterDirection.Input;
+
+            cmm.Parameters.Add("@result", MySqlDbType.VarChar);
+            cmm.Parameters["@result"].Direction = ParameterDirection.Output;
+
+            // Then insert into schedule
             MySqlCommand sql = new MySqlCommand("insertScheduledSlot", this.cnn);
             sql.CommandType = CommandType.StoredProcedure;
 
