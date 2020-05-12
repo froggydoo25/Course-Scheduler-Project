@@ -735,7 +735,7 @@ Begin
 	select c.course_subject_code, c.course_number, 
 	s.section_number, c.course_title, i.banner_id,
 	i.first_name, i.last_name, t.day_of_week,
-	concat(cast(time_format(t.start_time, "%h:%m %p") as char(10)), ' - ',cast(time_format(addtime(t.start_time, '1:15'), "%h:%m %p") as char(10))) as Time_Slot, concat(r.building, ' ', r.room_number) as Room_Info,
+	concat(cast(time_format(t.start_time, "%h:%m %p") as char(10)), ' - ',cast(time_format(addtime(t.start_time, '1:15'), "%h:%i %p") as char(10))) as Time_Slot, concat(r.building, ' ', r.room_number) as Room_Info,
 	c.course_credit_student as course_credits,
 	r.room_capacity, 50 as Waitlist_Seats,
     ' ' as Course_type, c.course_credit_student as Prof_credits,
