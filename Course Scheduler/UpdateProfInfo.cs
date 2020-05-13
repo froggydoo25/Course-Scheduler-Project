@@ -28,17 +28,14 @@ namespace Course_Scheduler
         public UpdateProfInfo()
         {
             this.cnn = new MySqlConnection();
-            cnn.ConnectionString = "server=localhost;uid=root;pwd=password;database=sweng";
+            cnn.ConnectionString = "server=localhost;uid=root;pwd=Pokemonres25;database=sweng";
             this.cnn.Open();
         }
 
         public void updateBannerIDs()
         {
             finalReport = Globals.ThisAddIn.Application.ActiveSheet;
-            _Excel.Range last = finalReport.Cells.SpecialCells(_Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
-            lastUsedRow = last.Row;
-            lastUsedCol = last.Column;
-            for (int y = 2; y < lastUsedRow; y++)
+            for (int y = 2; y < 1000; y++)
             {
                 string bannerID = ReadCell(y, 5, finalReport);
                 string instructorName = (ReadCell(y, 6, finalReport) + " " + ReadCell(y, 7, finalReport));
@@ -52,10 +49,7 @@ namespace Course_Scheduler
         public void updateProfIntoDB()
         {
             finalReport = Globals.ThisAddIn.Application.ActiveSheet;
-            _Excel.Range last = finalReport.Cells.SpecialCells(_Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
-            lastUsedRow = last.Row;
-            lastUsedCol = last.Column;
-            for (int y = 2; y < lastUsedRow; y++)
+            for (int y = 2; y < 1000; y++)
             {
                 string instructorName = (ReadCell(y, 6, finalReport) + " " + ReadCell(y, 7, finalReport));
                 if (instructorName != " ")
@@ -86,7 +80,7 @@ namespace Course_Scheduler
                     for (int i = 0; i < dayOfWeek.Length; i++)
                     {
                         string oldProf = getOldProfInfo(dayOfWeek[i], startTime, roomInfo, courseTitle, sectionNumber);
-                        if (!oldProf.Equals(instructorName))
+                        if (oldProf == null || !oldProf.Equals(instructorName))
                         {
                             profInfoUpdate(instructorName, oldProf, dayOfWeek[i], startTime, roomInfo, courseTitle, sectionNumber);
                         }
@@ -123,7 +117,6 @@ namespace Course_Scheduler
             sql.Parameters.AddWithValue("@oldInstructorName", oldProf);
             sql.Parameters["@oldInstructorName"].Direction = ParameterDirection.Input;
             
-
             sql.Parameters.AddWithValue("@day_of_week", day);
             sql.Parameters["@day_of_week"].Direction = ParameterDirection.Input;
 
@@ -142,7 +135,11 @@ namespace Course_Scheduler
             sql.Parameters.AddWithValue("@result", MySqlDbType.VarChar);
             sql.Parameters["@result"].Direction = ParameterDirection.Output;
 
-            sql.ExecuteNonQuery();
+            try
+            {
+                sql.ExecuteNonQuery();
+            }
+            catch (Exception e) { }
         }
 
         public string getOldProfInfo(char day, string startTime, string roomInfo, string courseTitle, string sectionNumber)
@@ -173,12 +170,12 @@ namespace Course_Scheduler
             sql.Parameters.Add(new MySqlParameter("@last_name", MySqlDbType.VarChar));
             sql.Parameters["@last_name"].Direction = ParameterDirection.Output;
 
-            sql.ExecuteNonQuery();
 
             string firstName = "";
             string lastName = "";
             try
             {
+                sql.ExecuteNonQuery();
                 firstName = (string)sql.Parameters["@first_name"].Value;
                 lastName = (string)sql.Parameters["@last_name"].Value;
                 result = firstName + " " + lastName;
