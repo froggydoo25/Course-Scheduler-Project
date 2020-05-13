@@ -183,11 +183,11 @@ namespace Course_Scheduler
                                             Type.Missing);
                         cell.Validation.IgnoreBlank = true;
                         cell.Validation.InCellDropdown = true;
-                        if (cell.Value == null)
+                        if (ds.Tables[0].Rows[row].ItemArray[col].ToString() != null || ds.Tables[0].Rows[row].ItemArray[col].ToString() == "")
                         {
-                            cell.Value = "Ola";
+                            cell.Value = ds.Tables[0].Rows[row].ItemArray[col].ToString();
                         }
-                  
+
                     }
                     else if (col == 6)     //Professor Last Names Col
                     {
@@ -200,9 +200,9 @@ namespace Course_Scheduler
                                             Type.Missing);
                         cell.Validation.IgnoreBlank = true;
                         cell.Validation.InCellDropdown = true;
-                        if (cell.Value == null)
+                        if (ds.Tables[0].Rows[row].ItemArray[col].ToString() != null || ds.Tables[0].Rows[row].ItemArray[col].ToString() == "")
                         {
-                            cell.Value = "Ajaj";
+                            cell.Value = ds.Tables[0].Rows[row].ItemArray[col].ToString();
                         }
                     }
                     else //Every other column
