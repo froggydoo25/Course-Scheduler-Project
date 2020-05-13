@@ -3,7 +3,7 @@ Software Engineering Project - Spring 2020 @ Rowan University
 ### Sponsor: Dr. Vasil Hnatyshin
 ### Mentor: Professor Jack Myers
 
-#### Specification
+#### Specifications
 There is a need to develop a program that will help with automating parts of the scheduling
 process. Specifically, the program should do the following:
 - Maintain a database of CS courses
@@ -22,4 +22,7 @@ process. Specifically, the program should do the following:
   3. Ce Pang
   4. [Steven Jiang](https://github.com/jiangs11)
   
-  
+#### System Details
+- Front-End Language: C#
+- Back-End Database: MySQL
+- Libraries/Packages: update thisssssssssssssss
