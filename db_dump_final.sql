@@ -682,7 +682,7 @@ Begin
     100 as percent_taught, 'Yes' as room_for_finals
 	from Schedules sch
 	join Time_Slot t using (time_slot_id)
-	join Instructor i using (instructor_id)
+	left join Instructor i using (instructor_id)
 	join Room r using (room_id)
 	join Section s using (section_id)
 	join Course c using (course_id);
