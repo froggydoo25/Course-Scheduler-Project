@@ -102,17 +102,29 @@ C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project
 C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\System.Xml.XmlSerializer.dll
 C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\System.Xml.XPath.dll
 C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\System.Xml.XPath.XDocument.dll
-C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\BouncyCastle.Crypto.dll
-C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\Google.Protobuf.dll
 C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
 C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\MySql.Data.dll
 C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\Renci.SshNet.dll
 C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\Ubiety.Dns.Core.dll
-C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\Google.Protobuf.xml
 C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\MySql.Data.xml
 C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\Renci.SshNet.xml
-C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\Ubiety.Dns.Core.xml
 C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\obj\Debug\Course Scheduler.csproj.CoreCompileInputs.cache
 C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\obj\Debug\Course Scheduler.csproj.CopyComplete
 C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\obj\Debug\Course Scheduler.dll
 C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\obj\Debug\Course Scheduler.pdb
+C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\Course Scheduler.dll.config
+C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\K4os.Compression.LZ4.dll
+C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\K4os.Compression.LZ4.Streams.dll
+C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\K4os.Hash.xxHash.dll
+C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\System.Buffers.dll
+C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\System.Memory.dll
+C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\Zstandard.Net.dll
+C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\K4os.Compression.LZ4.xml
+C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\K4os.Compression.LZ4.Streams.xml
+C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\K4os.Hash.xxHash.xml
+C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\System.Buffers.xml
+C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\System.Memory.xml
+C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\Sanchez\Desktop\Visual Studio\Course Scheduler\Course-Scheduler-Project\Course Scheduler\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
