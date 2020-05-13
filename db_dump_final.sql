@@ -1676,7 +1676,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`jiangs1`@`%` PROCEDURE `updateInstructorBannerID`(
+CREATE PROCEDURE `updateInstructorBannerID`(
 	in bannerID char(9),
     in instructorName varchar(255),
     out result varchar(100)
