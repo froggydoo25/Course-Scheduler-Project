@@ -1486,8 +1486,7 @@ CREATE PROCEDURE `insertSectionIntoDatabase`(
     in modifier varchar(45),
     in section_number varchar(5),
     in duration int(11),
-    in start_date_in_session varchar(255),
-    in end_date_in_session varchar(255),
+    in sessionName varchar(255),
     in course_abbreviation varchar(255),
     out result varchar(10)
 )
@@ -1496,11 +1495,13 @@ begin
 	 declare session_id_as_var int default 100000;
 	 declare total int;
 	 
-	 select c.course_id into course_id_as_var from Course c 
+	 select c.course_id into course_id_as_var
+    	 from Course c 
 	 where c.course_abbreviation = course_abbreviation;
 	 
-	 select s.session_id into session_id_as_var from Session s 
-	 where s.start_date = str_to_date(start_date_in_session, '%d,%m,%Y') and s.end_date = str_to_date(end_date_in_session, '%d,%m,%Y');
+	 select s.session_id into session_id_as_var 
+     	 from Session s 
+	 where s.session_name = sessionName;
 
 	 select count(*) into total from Section;
 	 
