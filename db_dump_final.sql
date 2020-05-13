@@ -1094,7 +1094,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE PROCEDURE `getOldInstructorTeaching`(
     in day_of_week varchar(5),
-    in start_time time,
+    in start_time varchar(255),
     in room_info varchar(255),
     in course_title varchar(45),
     in section_number varchar(5),
@@ -1109,7 +1109,7 @@ BEGIN
         
     select ts.time_slot_id into time_slot_id_as_var
     from Time_Slot ts
-    where ts.day_of_week = day_of_week and ts.start_time = start_time;
+    where ts.day_of_week = day_of_week and ts.start_time = convert(start_time, time);
     
     select r.room_id into room_id_as_var 
     from Room r
@@ -1709,7 +1709,7 @@ CREATE PROCEDURE `updateInstructorOfScheduleIntoDatabase`(
 	in instructorName varchar(255),
     in oldInstructorName varchar(255),
     in day_of_week varchar(5),
-    in start_time time,
+    in start_time varchar(255),
     in room_info varchar(255),
     in course_title varchar(45),
     in section_number varchar(5),
@@ -1747,7 +1747,7 @@ begin
     
     select ts.time_slot_id into time_slot_id_as_var
     from Time_Slot ts
-    where ts.day_of_week = day_of_week and ts.start_time = start_time;
+    where ts.day_of_week = day_of_week and ts.start_time = convert(start_time, time);
     
     select r.room_id into room_id_as_var 
     from Room r
