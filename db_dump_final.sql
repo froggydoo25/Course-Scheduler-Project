@@ -684,7 +684,7 @@ Begin
     100 as percent_taught, 'Yes' as room_for_finals
 	from Schedules sch
 	join Time_Slot t using (time_slot_id)
-	join Instructor i using (instructor_id)
+	left join Instructor i using (instructor_id)
 	join Room r using (room_id)
 	join Section s using (section_id)
 	join Course c using (course_id);
@@ -715,7 +715,7 @@ begin
     100 as percent_taught, 'Yes' as room_for_finals
     from Schedules sch
     join Time_Slot ts using (time_slot_id)
-    join Instructor i using (instructor_id)
+    left join Instructor i using (instructor_id)
     join Room r using (room_id)
     join Section s using (section_id)
     join Course c using (course_id)
@@ -1093,7 +1093,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE PROCEDURE `getOldInstructorTeaching`(
-	in day_of_week varchar(5),
+    in day_of_week varchar(5),
     in start_time time,
     in room_info varchar(255),
     in course_title varchar(45),
@@ -1151,7 +1151,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE PROCEDURE `getOldScheduledInfo`(
-	in day_of_week varchar(5),
+    in day_of_week varchar(5),
     in start_time time,
     in room_info varchar(255),
     out oldCourseName varchar(255),
@@ -1161,7 +1161,7 @@ CREATE PROCEDURE `getOldScheduledInfo`(
     out oldInstructorLastName varchar(255)
 )
 BEGIN
-	declare time_slot_id_as_var int default 10000;
+    declare time_slot_id_as_var int default 10000;
     declare room_id_as_var int default 10000;
     declare instructor_id_as_var int default 10000;
     declare section_id_as_var_one int default 10000;
