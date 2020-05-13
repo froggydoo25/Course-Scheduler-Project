@@ -13,7 +13,7 @@ process. Specifically, the program should do the following:
 - Generate scheduling reports that displays weekly schedule for each faculty with their corresponding loads, BA in C&I schedule, BS in CS schedule, MS in CS schedule, MS in DA schedule, etc.
 - The program will have to work with MS Excel.
 
-#### Team Ducks Members :duck:
+#### :duck: Team Ducks Members :duck:
 - Scrum Master: Chris Barnes
 - Product Owner: Dan Sanchez
 - Development Team:
