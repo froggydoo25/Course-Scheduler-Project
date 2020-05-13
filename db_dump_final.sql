@@ -1723,6 +1723,7 @@ begin
     declare room_id_as_var int default 10000;
     declare instructor_available boolean default false;
     declare schedule_exist boolean default true;
+    declare tempCount int default 0;
     declare n int default 0;
     declare i int default 0;
     
@@ -1737,10 +1738,9 @@ begin
 	else
 		(select instructor_id into  old_instructor_id_as_var from
 		Schedules sch
-		where room_id_as_var = sch.room_id and time_slot_id_as_var = sch.time_slot_id and  sch.section_id = section_id_as_var); 
+		where room_id_as_var = sch.room_id and time_slot_id_as_var = sch.time_slot_id and sch.section_id = section_id_as_var); 
     end if;
-	
-    
+
     select i.instructor_id into instructor_id_as_var 
     from Instructor i
     where instructorName = concat(i.first_name, ' ', i.last_name);
@@ -1760,9 +1760,23 @@ begin
     
     
     # check whether the schedule exists. 
-    if(select * from 
-		Schedules sch
-		where room_id_as_var = sch.room_id and time_slot_id_as_var = sch.time_slot_id and  sch.section_id = section_id_as_var and sch.instructor_id = old_instructor_id_as_var) = ''
+    /*if (select * 
+		from Schedules sch
+		where sch.room_id = room_id_as_var and 
+			  sch.time_slot_id = time_slot_id_as_var and 
+              sch.section_id = section_id_as_var and 
+              sch.instructor_id = old_instructor_id_as_var) = ''
+    then
+		set schedule_exist = false;
+    end if;*/
+    set tempCount = (select count(*) 
+					 from Schedules sch
+					 where sch.room_id = room_id_as_var and 
+						   sch.time_slot_id = time_slot_id_as_var and 
+						   sch.section_id = section_id_as_var and 
+						   sch.instructor_id = old_instructor_id_as_var);
+    
+    if temp = 0
     then
 		set schedule_exist = false;
     end if;
@@ -1776,11 +1790,12 @@ begin
 		if instructor_id_as_var = 
         (select instructor_id from Schedules sch
 			where sch.schedule_id = i
-        )
+		)
         and 
         time_slot_id_as_var = 
         (select time_slot_id from Schedules sch
-			where sch.schedule_id = i)
+			where sch.schedule_id = i
+		)
 		then
 			set instructor_available = false;
 		end if;
@@ -1794,7 +1809,7 @@ begin
 	elseif(schedule_exist = false)
     then
         set result = 'The schedule does not exist, cannot be updated';
-	elseif(instructor_available  and schedule_exist)
+	elseif(instructor_available = true and schedule_exist = true)
     then
     
 		delete from Schedules where 
@@ -1809,10 +1824,11 @@ begin
 		end if;
     
 		insert into Schedules(instructor_id, section_id, room_id, time_slot_id) 
-		values (instructor_id_as_var, section_id_as_var, room_id_as_var, time_slot_id_as_var);
+		values 
+			(instructor_id_as_var, section_id_as_var, room_id_as_var, time_slot_id_as_var);
         
         
-		if total = (select count(*) from Schedules)  and temp = true
+		if total = (select count(*) from Schedules) and temp = true
 		then
 			set result = 'success';
 		elseif total > (select count(*) from Schedules) and temp = false
@@ -1826,7 +1842,6 @@ begin
 		end if;
         
 	end if;
-    
  end ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
