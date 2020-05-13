@@ -18,7 +18,7 @@ process. Specifically, the program should do the following:
 - Product Owner: Dan Sanchez
 - Development Team:
   1. Matt Kane
-  2. Joey Salemo
+  2. [Joey Salemo](https://github.com/froggydoo25)
   3. Ce Pang
   4. [Steven Jiang](https://github.com/jiangs11)
   
