@@ -333,6 +333,8 @@ namespace Course_Sceduler
                 for (int j = 5; j < 60; j++) //Use 60 since that's the highest Y value with data
                 {
                     string building = AssignBuilding(i, j);
+                    if (building.Equals("Enterprise"))
+                        building = "Enterprise Center";
                     string roomNum = AssignRoomNum(i, j);
                     char day = AssignDay(i);
                     string time = AssignTime(j);
