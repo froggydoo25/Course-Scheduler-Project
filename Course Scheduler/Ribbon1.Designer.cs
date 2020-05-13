@@ -40,13 +40,13 @@
             this.format_group = this.Factory.CreateRibbonGroup();
             this.center_align_button = this.Factory.CreateRibbonButton();
             this.border_button = this.Factory.CreateRibbonButton();
+            this.clear_sheet_button = this.Factory.CreateRibbonButton();
             this.group1 = this.Factory.CreateRibbonGroup();
             this.insert_courses_button = this.Factory.CreateRibbonButton();
             this.update_prof_button = this.Factory.CreateRibbonButton();
             this.group2 = this.Factory.CreateRibbonGroup();
             this.clear_sections_button = this.Factory.CreateRibbonButton();
             this.clear_schedule_button = this.Factory.CreateRibbonButton();
-            this.button1 = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.report_group.SuspendLayout();
             this.format_group.SuspendLayout();
@@ -79,6 +79,7 @@
             // 
             this.format_group.Items.Add(this.center_align_button);
             this.format_group.Items.Add(this.border_button);
+            this.format_group.Items.Add(this.clear_sheet_button);
             this.format_group.Label = "Format";
             this.format_group.Name = "format_group";
             // 
@@ -94,11 +95,16 @@
             this.border_button.Name = "border_button";
             this.border_button.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.border_button_Click);
             // 
+            // clear_sheet_button
+            // 
+            this.clear_sheet_button.Label = "Clear Sheet";
+            this.clear_sheet_button.Name = "clear_sheet_button";
+            this.clear_sheet_button.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.clear_sheet_button_Click);
+            // 
             // group1
             // 
             this.group1.Items.Add(this.insert_courses_button);
             this.group1.Items.Add(this.update_prof_button);
-            this.group1.Items.Add(this.button1);
             this.group1.Label = "Update";
             this.group1.Name = "group1";
             // 
@@ -132,12 +138,6 @@
             this.clear_schedule_button.Label = "Clear Schedule";
             this.clear_schedule_button.Name = "clear_schedule_button";
             this.clear_schedule_button.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.clear_schedule_button_Click);
-            // 
-            // button1
-            // 
-            this.button1.Label = "Test Insert";
-            this.button1.Name = "button1";
-            this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click);
             // 
             // Ribbon1
             // 
@@ -173,7 +173,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton clear_sections_button;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton clear_schedule_button;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton insert_courses_button;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton clear_sheet_button;
     }
 
     partial class ThisRibbonCollection

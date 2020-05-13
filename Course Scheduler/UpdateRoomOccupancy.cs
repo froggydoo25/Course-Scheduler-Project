@@ -325,11 +325,6 @@ namespace Course_Sceduler
             return "";
         }
 
-        public void testInsert()
-        {
-            InsertIntoDatabase('M', "08:00", "Robinson", "121", 11, "IOOP");
-        }
-
         public void WriteToDatabase()
         {//i = x coord or col
             rooms = Globals.ThisAddIn.Application.ActiveSheet;
@@ -350,7 +345,9 @@ namespace Course_Sceduler
                         DeleteScheduledSlot(day, time, building, roomNum);
                         string[] abbrevAndSects = abbrevConcatSects.Split('-');
                         if (abbrev != "" && sects != null)
-                            InsertIntoDatabase(day, time, building, roomNum, sects[0], abbrev);
+                            for(int k = 0; k < sects.Length; k++)
+                                if(sects[k] != 0)
+                                    InsertIntoDatabase(day, time, building, roomNum, sects[k], abbrev);
                     }
                 }
             }

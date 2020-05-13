@@ -28,7 +28,7 @@ namespace Course_Scheduler
         public UpdateProfInfo()
         {
             this.cnn = new MySqlConnection();
-            cnn.ConnectionString = "server=localhost;uid=root;pwd=Pokemonres25;database=sweng";
+            cnn.ConnectionString = "server=localhost;uid=root;pwd=password;database=sweng";
             this.cnn.Open();
         }
 

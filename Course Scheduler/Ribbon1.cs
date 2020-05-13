@@ -11,6 +11,7 @@ namespace Course_Scheduler
     {
         Reports r = new Reports();
         UpdateRoomOccupancy u = new UpdateRoomOccupancy();
+        UpdateProfInfo up = new UpdateProfInfo();
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
 
@@ -43,7 +44,8 @@ namespace Course_Scheduler
 
         private void update_prof_button_Click(object sender, RibbonControlEventArgs e)
         {
-
+            up.updateBannerIDs();
+            up.updateProfIntoDB();
         }
 
         private void insert_courses_button_Click(object sender, RibbonControlEventArgs e)
@@ -51,9 +53,9 @@ namespace Course_Scheduler
             u.WriteToDatabase();
         }
 
-        private void button1_Click(object sender, RibbonControlEventArgs e)
+        private void clear_sheet_button_Click(object sender, RibbonControlEventArgs e)
         {
-            u.testInsert();
+            r.clearSheet();
         }
     }
 }
