@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Collections.Generic;
 using System.IO;
@@ -172,32 +172,39 @@ namespace Course_Scheduler
                         final_report.Cells[row + 2, col + 1].NumberFormat = "@";
                         final_report.Cells[row + 2, col + 1] = ds.Tables[0].Rows[row].ItemArray[col].ToString();
                     }
-                    //else if (col == 5)      //Professor First Names Col
-                    //{
-                    //    var cell = (Range)final_report.Cells[row + 2, col + 1];
-                    //    cell.Validation.Delete();
-                    //    cell.Validation.Add(XlDVType.xlValidateList,
-                    //                        XlDVAlertStyle.xlValidAlertInformation,
-                    //                        XlFormatConditionOperator.xlBetween,
-                    //                        firstNameList,
-                    //                        Type.Missing);
-                    //    cell.Validation.IgnoreBlank = true;
-                    //    cell.Validation.InCellDropdown = true;
-                    //    cell.Value = "";
-                    //}
-                    //else if (col == 6)     //Professor Last Names Col
-                    //{
-                    //    var cell = (Range)final_report.Cells[row + 2, col + 1];
-                    //    cell.Validation.Delete();
-                    //    cell.Validation.Add(XlDVType.xlValidateList,
-                    //                        XlDVAlertStyle.xlValidAlertInformation,
-                    //                        XlFormatConditionOperator.xlBetween,
-                    //                        lastNamesList,
-                    //                        Type.Missing);
-                    //    cell.Validation.IgnoreBlank = true;
-                    //    cell.Validation.InCellDropdown = true;
-                    //    cell.Value = "";
-                    //}
+                    else if (col == 5)      //Professor First Names Col
+                    {
+                        var cell = (Range)final_report.Cells[row + 2, col + 1];
+                        cell.Validation.Delete();
+                        cell.Validation.Add(XlDVType.xlValidateList,
+                                            XlDVAlertStyle.xlValidAlertInformation,
+                                            XlFormatConditionOperator.xlBetween,
+                                            firstNameList,
+                                            Type.Missing);
+                        cell.Validation.IgnoreBlank = true;
+                        cell.Validation.InCellDropdown = true;
+                        if (cell.Value == null)
+                        {
+                            cell.Value = "Ola";
+                        }
+                  
+                    }
+                    else if (col == 6)     //Professor Last Names Col
+                    {
+                        var cell = (Range)final_report.Cells[row + 2, col + 1];
+                        cell.Validation.Delete();
+                        cell.Validation.Add(XlDVType.xlValidateList,
+                                            XlDVAlertStyle.xlValidAlertInformation,
+                                            XlFormatConditionOperator.xlBetween,
+                                            lastNamesList,
+                                            Type.Missing);
+                        cell.Validation.IgnoreBlank = true;
+                        cell.Validation.InCellDropdown = true;
+                        if (cell.Value == null)
+                        {
+                            cell.Value = "Ajaj";
+                        }
+                    }
                     else //Every other column
                     {
                         data = ds.Tables[0].Rows[row].ItemArray[col].ToString();
