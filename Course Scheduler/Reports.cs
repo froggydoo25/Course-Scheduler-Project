@@ -125,7 +125,7 @@ namespace Course_Scheduler
 
         public void reportFromDB()
         {
-            sql = "call FinalReport();";
+            sql = "call FinalReportSimplified();";
             MySql.Data.MySqlClient.MySqlDataAdapter dscmd = new MySql.Data.MySqlClient.MySqlDataAdapter(sql, cnn);
             MySql.Data.MySqlClient.MySqlDataAdapter Ids = new MySql.Data.MySqlClient.MySqlDataAdapter("select banner_id from instructor order by banner_id;", cnn);
             MySql.Data.MySqlClient.MySqlDataAdapter Fname = new MySql.Data.MySqlClient.MySqlDataAdapter("select first_name from instructor order by first_name;", cnn);

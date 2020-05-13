@@ -50,5 +50,10 @@ namespace Course_Scheduler
         {
             u.WriteToDatabase();
         }
+
+        private void button1_Click(object sender, RibbonControlEventArgs e)
+        {
+            u.testInsert();
+        }
     }
 }

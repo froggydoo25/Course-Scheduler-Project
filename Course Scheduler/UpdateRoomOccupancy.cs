@@ -77,16 +77,16 @@ namespace Course_Sceduler
             switch (yCoord / 15) //0 = 1, 1 = 16, 2 = 31, 3 = 46 for y coord of building concat
             {
                 case 0:
-                    buildingYVal = 1;
+                    buildingYVal = 4;
                     break;
                 case 1:
-                    buildingYVal = 16;
+                    buildingYVal = 19;
                     break;
                 case 2:
-                    buildingYVal = 31;
+                    buildingYVal = 34;
                     break;
                 case 3:
-                    buildingYVal = 46;
+                    buildingYVal = 49;
                     break;
             }
 
@@ -122,16 +122,16 @@ namespace Course_Sceduler
             switch (yCoord / 15) //0 = 1, 1 = 16, 2 = 31, 3 = 46 for y coord of building concat
             {
                 case 0:
-                    buildingYVal = 1;
+                    buildingYVal = 4;
                     break;
                 case 1:
-                    buildingYVal = 16;
+                    buildingYVal = 19;
                     break;
                 case 2:
-                    buildingYVal = 31;
+                    buildingYVal = 34;
                     break;
                 case 3:
-                    buildingYVal = 46;
+                    buildingYVal = 49;
                     break;
             }
 
@@ -159,34 +159,34 @@ namespace Course_Sceduler
             string result = "";
             switch (yCoord % 15)
             {
-                case 5:
+                case 8:
                     result = "08:00:00";
                     break;
-                case 6:
+                case 9:
                     result = "09:30:00";
                     break;
-                case 7:
+                case 10:
                     result = "11:00:00";
                     break;
-                case 8:
+                case 11:
                     result = "12:30:00";
                     break;
-                case 9:
+                case 12:
                     result = "14:00:00";
                     break;
-                case 10:
+                case 13:
                     result = "15:30:00";
                     break;
-                case 11:
+                case 14:
                     result = "17:00:00";
                     break;
-                case 12:
+                case 0:
                     result = "18:30:00";
                     break;
-                case 13:
+                case 1:
                     result = "20:00:00";
                     break;
-                case 14:
+                case 2:
                     result = "21:30:00";
                     break;
             }
@@ -262,6 +262,7 @@ namespace Course_Sceduler
 
         public void InsertIntoDatabase(char day, string time, string building, string roomNum, int sectNum, string abbrev)
         {
+            rooms = Globals.ThisAddIn.Application.ActiveSheet;
             // Inserting sections first
             MySqlCommand cmm = new MySqlCommand("insertSectionIntoDatabase", this.cnn);
             cmm.CommandType = CommandType.StoredProcedure;
@@ -269,25 +270,22 @@ namespace Course_Sceduler
             cmm.Parameters.AddWithValue("@modifier", null);
             cmm.Parameters["@modifier"].Direction = ParameterDirection.Input;
 
-            cmm.Parameters.AddWithValue("@section_number", sectNum);
+            cmm.Parameters.AddWithValue("@section_number", sectNum + "");
             cmm.Parameters["@section_number"].Direction = ParameterDirection.Input;
 
             cmm.Parameters.AddWithValue("@duration", 75);
             cmm.Parameters["@duration"].Direction = ParameterDirection.Input;
 
             //Get the start date
-            cmm.Parameters.AddWithValue("@start_date_in_session", roomNum);
-            cmm.Parameters["@start_date_in_session"].Direction = ParameterDirection.Input;
-
-            //Get the end date
-            cmm.Parameters.AddWithValue("@end_date_in_session", sectNum);
-            cmm.Parameters["@end_date_in_session"].Direction = ParameterDirection.Input;
+            cmm.Parameters.AddWithValue("@sessionName", "1 - Full Term");
+            cmm.Parameters["@sessionName"].Direction = ParameterDirection.Input;
 
             cmm.Parameters.AddWithValue("@course_abbreviation", abbrev);
             cmm.Parameters["@course_abbreviation"].Direction = ParameterDirection.Input;
 
             cmm.Parameters.Add("@result", MySqlDbType.VarChar);
             cmm.Parameters["@result"].Direction = ParameterDirection.Output;
+            cmm.ExecuteNonQuery();
 
             // Then insert into schedule
             MySqlCommand sql = new MySqlCommand("insertScheduledSlot", this.cnn);
@@ -298,8 +296,7 @@ namespace Course_Sceduler
 
             sql.Parameters.AddWithValue("@timeSlotDay", day);
             sql.Parameters["@timeSlotDay"].Direction = ParameterDirection.Input;
-
-            TimeSpan startTime = TimeSpan.Parse(time);
+            
             sql.Parameters.AddWithValue("@timeSlotStartTime", time);
             sql.Parameters["@timeSlotStartTime"].Direction = ParameterDirection.Input;
 
@@ -328,6 +325,11 @@ namespace Course_Sceduler
             return "";
         }
 
+        public void testInsert()
+        {
+            InsertIntoDatabase('M', "08:00", "Robinson", "121", 11, "IOOP");
+        }
+
         public void WriteToDatabase()
         {//i = x coord or col
             rooms = Globals.ThisAddIn.Application.ActiveSheet;
@@ -342,17 +344,13 @@ namespace Course_Sceduler
                     if ((day != '\0') && (time != "") && (building != "") && (roomNum != ""))
                     {
                         string abbrevConcatSects = ReadCell(j, i, rooms);
-                        string abbrev = AssignAbbrev(abbrevConcatSects);
-                        //int[] sects = AssignSections(abbrevConcatSects);
-                        DeleteScheduledSlot(day, time, building, roomNum);
-                        InsertIntoDatabase(day, time, building, roomNum, 1, "IOOP");
-                        //if (abbrev != "" && sects != null)
-                        //{ 
-                        //foreach (int q in sects)
-                        // {
 
-                        //}
-                        //}
+                        string abbrev = AssignAbbrev(abbrevConcatSects);
+                        int[] sects = AssignSections(abbrevConcatSects);
+                        DeleteScheduledSlot(day, time, building, roomNum);
+                        string[] abbrevAndSects = abbrevConcatSects.Split('-');
+                        if (abbrev != "" && sects != null)
+                            InsertIntoDatabase(day, time, building, roomNum, sects[0], abbrev);
                     }
                 }
             }
