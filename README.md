@@ -1,7 +1,7 @@
 # Course Scheduler
 Software Engineering Project - Spring 2020 @ Rowan University
-### Sponsor: Dr. Vasil Hnatyshin
-### Mentor: Professor Jack Myers
+### Sponsor: Dr. Vasil Hnatyshin - Computer Science Department Head
+### Mentor: Professor Jack Myers - Computer Science Department Instructor
 
 #### Specifications
 There is a need to develop a program that will help with automating parts of the scheduling
@@ -13,7 +13,7 @@ process. Specifically, the program should do the following:
 - Generate scheduling reports that displays weekly schedule for each faculty with their corresponding loads, BA in C&I schedule, BS in CS schedule, MS in CS schedule, MS in DA schedule, etc.
 - The program will have to work with MS Excel.
 
-#### Members
+#### Team Ducks Members
 - Scrum Master: Chris Barnes
 - Product Owner: Dan Sanchez
 - Development Team:
