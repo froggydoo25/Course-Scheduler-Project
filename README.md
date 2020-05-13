@@ -25,4 +25,5 @@ process. Specifically, the program should do the following:
 #### System Details
 - Front-End Language: C#
 - Back-End Database: MySQL
+  - Server Version: 8.0.19
 - Libraries/Packages: update thisssssssssssssss
