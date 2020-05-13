@@ -1488,32 +1488,42 @@ CREATE PROCEDURE `insertSectionIntoDatabase`(
     in duration int(11),
     in sessionName varchar(255),
     in course_abbreviation varchar(255),
-    out result varchar(10)
+    out result varchar(255)
 )
 begin 
-	 declare course_id_as_var int default 10000;
+declare course_id_as_var int default 10000;
 	 declare session_id_as_var int default 100000;
+     declare count int default 0;
 	 declare total int;
 	 
 	 select c.course_id into course_id_as_var
-    	 from Course c 
+     from Course c 
 	 where c.course_abbreviation = course_abbreviation;
 	 
 	 select s.session_id into session_id_as_var 
-     	 from Session s 
+     from Session s 
 	 where s.session_name = sessionName;
 
 	 select count(*) into total from Section;
+     
+     select count(*) into count
+     from Section s
+     where s.section_number = section_number and
+		   s.course_id = course_id_as_var and 
+           s.session_id = session_id_as_var;
 	 
-	 insert into Section(waitlist_seats, modifier, section_number, course_id, duration, session_id)
-	 values 
-		(50, modifier, section_number, course_id_as_var, duration, session_id_as_var);
-	 
+     if (count = 0)
+     then
+		insert into Section(waitlist_seats, modifier, section_number, course_id, duration, session_id)
+		values 
+			(50, modifier, section_number, course_id_as_var, duration, session_id_as_var);
+	 end if;
+     
 	 if total < (select count(*) from Section)
 	 then
 		set result = 'success';
 	 else
-		set result = 'fail';
+		set result = 'fail, probably already inserted section before';
 	 end if;
 end ;;
 DELIMITER ;
